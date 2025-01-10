@@ -40,6 +40,7 @@ This repository hosts the WebAssembly version of the LRS (Lexicographic Reverse 
 ## Getting Started
 
 1. Clone this repository:
+
    ```bash
    git clone https://github.com/yourusername/lrs-web-app.git
    ```
@@ -80,18 +81,24 @@ https://yourusername.github.io/lrs-web-app/
 
 1. Install [Emscripten](https://emscripten.org/).
 2. Download the source files for LRS from [here](https://cgm.cs.mcgill.ca/~avis/C/lrslib/archive/lrslib-073.tar.gz):
+
    ```bash
    wget https://cgm.cs.mcgill.ca/~avis/C/lrslib/archive/lrslib-073.tar.gz
    ```
+
 3. Extract the downloaded archive:
+
    ```bash
    tar -xvzf lrslib-073.tar.gz
    ```
+
 4. Navigate to the extracted directory and compile the LRS C code to WebAssembly:
+
    ```bash
    cd lrslib-073
    emcc input-file.c -o output-file.js -s EXPORTED_RUNTIME_METHODS="['FS', 'callMain']" -s ENVIRONMENT="web" -s ALLOW_MEMORY_GROWTH=1
    ```
+
 5. Replace the JavaScript and WebAssembly files in the respective directories.
 
 ## Source Code Attribution
@@ -119,4 +126,3 @@ This project is licensed under the GNU General Public License Version 2. See the
 ## Contributing
 
 Contributions are welcome! Please submit issues or pull requests to improve the project.
-

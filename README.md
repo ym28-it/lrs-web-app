@@ -14,7 +14,7 @@ This repository hosts the WebAssembly version of the LRS (Lexicographic Reverse 
 
 ```
 .
-├── lrs-index.html         # Main index page for navigation.
+├── index.html         # Main index page for navigation.
 ├── README.md              # Documentation for the project.
 ├── mp64/                  # Directory for MP (Multiple Precision) version.
 │   ├── lrs-mp64.html

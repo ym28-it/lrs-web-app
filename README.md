@@ -114,10 +114,21 @@ For more details, see the original [lrslib website](https://cgm.cs.mcgill.ca/~av
 
 While this project implements many features of the original `lrslib`, it does not yet support certain advanced functionalities, such as:
 
-- **Hybrid Mode**: Combining different arithmetic modes for optimized performance.
-- **GMP (GNU Multiple Precision) Mode**: Utilizing GMP for highly accurate calculations with arbitrary precision.
+- Parallel computation not supported
 
 These features remain as potential future enhancements to this WebAssembly version.
+
+## Change Log
+
+### January 21, 2025
+
+- Enabled output installation functionality.
+- Added support for uploading input files.
+- Implemented the ability to execute commands with `Ctrl+Enter`.
+
+### January 28, 2025
+
+- Added Hybrid Mode for combining different arithmetic modes to optimize performance.
 
 ## License
 

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LRS Hybrid Single-Thread</title>
+    <style>
+        body {
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 15px;
+        }
+
+        .header {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .header h3 {
+            margin: 10px;
+        }
+
+        .fixed-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .fixed-button:hover {
+            background-color: #0056b3;
+        }
+
+        .main {
+            margin: 0 auto 10px;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        textarea {
+            width: 100%;
+            max-width: 800px;
+            height: 250px;
+            margin: 0 auto 10px;
+            display: block;
+        }
+
+        button {
+        position: relative;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        background-color: #007BFF;
+        color: white;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    /* tooltip style */
+    .tooltip {
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #333;
+        color: #fff;
+        font-size: 14px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s, visibility 0.2s;
+    }
+
+    button:hover .tooltip {
+        opacity: 1;
+        visibility: visible;
+    }
+
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        @media (max-width: 400px) {
+        .fixed-button {
+            position: static;
+            margin-top: 10px;
+            align-self: flex-start;
+        }
+    }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="../index.html"><h1>LRS by JavaScript</h1></a>
+        <h3>LRS Hybrid Single-Thread</h3>
+    </header>
+
+    <main class="main">
+        <h2>Upload File:</h2>
+        <input type="file" id="fileInput">
+        <h2>Input:</h2>
+        <textarea id="inputArea" rows="10" cols="50" ></textarea><br>
+        <button id="runProgram">
+            Submit
+            <span class="tooltip">Ctrl+Enter or Cmd+Enter</span>
+        </button>
+        <h2>Output:</h2>
+        <textarea id="outputArea" rows="10" cols="50" readonly></textarea>
+        <label for="outputFileName">Output File Name:</label>
+        <input type="text" id="outputFileName" placeholder="output.txt"><br>
+        <button id="downloadOutput">Download Output</button>
+    </main>
+
+    <script src="hybrid.js"></script>
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const inputArea = document.getElementById('inputArea');
+        const outputArea = document.getElementById('outputArea');
+        const outputFileNameInput = document.getElementById('outputFileName');
+        const runProgramButton = document.getElementById('runProgram');
+    
+        // File upload functionality
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+    
+            reader.onload = (e) => {
+                inputArea.value = e.target.result;
+            };
+    
+            if (file) {
+                reader.readAsText(file);
+            }
+        });
+    
+        // Function to run the program
+        function runProgram() {
+            const inputFileName = "input.txt";
+            const outputFileName = "output.txt";
+            const inputText = inputArea.value;
+    
+            // Create virtual input file
+            FS.writeFile(`/${inputFileName}`, inputText);
+    
+            // Create virtual output file
+            FS.writeFile(`/${outputFileName}`, '');
+    
+            // Execute Wasm programs
+            Module.callMain([`/${inputFileName}`, `/${outputFileName}`]);
+    
+            // Reading output
+            const outputText = FS.readFile(`/${outputFileName}`, { encoding: 'utf8' });
+    
+            // Result
+            outputArea.value = outputText;
+        }
+    
+        // Submit button event listener
+        runProgramButton.addEventListener('click', runProgram);
+    
+        // Add keyboard shortcut: Ctrl+Enter or Cmd+Enter
+        document.addEventListener('keydown', (event) => {
+            if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+                runProgram();
+            }
+        });
+    
+        // File download functionality
+        document.getElementById('downloadOutput').addEventListener('click', () => {
+            const outputText = outputArea.value;
+            const outputFileName = outputFileNameInput.value.trim() || 'output.txt';
+            const blob = new Blob([outputText], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = outputFileName;
+            a.click();
+            URL.revokeObjectURL(a.href);
+        });
+    </script>
+    
+</body>
+</html>

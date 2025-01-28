@@ -4,101 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LRS by JavaScript</title>
-    <style>
-        body {
-            font-size:16px;
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 15px;
-        }
-        
-        .header {
-            display: flex;
-            align-items: flex-end;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .header h1 {
-            margin: 0;
-        }
-        .header h3 {
-            margin-bottom: 10px;
-        }
-        .sub-title {
-            font-size: 1em;
-            color: gray;
-            margin-left: 10px;
-        }
 
-        .main {
-            margin: 0 auto 10px;
-            max-width: 800px;
-            text-align: left;
-        }
-        textarea {
-            width: 100%;
-            max-width: 800px;
-            height: 250px;
-            margin: 0 auto 10px;
-            display: block;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-        pre {
-            background-color: #f4f4f4;
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
+    <link rel="stylesheet" href="css/style.css">
 
-        .nav-button {
-            padding: 12px 24px;
-            font-size: 16px;
-            color: white;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .nav-button:hover {
-            background-color: #0056b3;
-        }
-
-        .nav-button:active {
-            background-color: #003d80;
-        }
-
-        @media (max-width: 800px) {
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .sub-title {
-                margin-left: 0px;
-                margin-top: 5px;
-            }
-            .main {
-                padding-left: 0;
-            }
-            textarea {
-                height: 200px;
-            }
-
-            button {
-                display: block;
-                margin: 0 auto 10px;
-            }
-
-            h1, h2, h3 {
-                font-size: 1.5em;
-            }
-        }
-
-    </style>
 </head>
 <body>
     <header class="header">
@@ -130,6 +38,5 @@
             <button class="nav-button" onclick="location.href='./long64/lrs-long64-unsafe.html'">LRS LONG 64bit unsafe</button>
             <button class="nav-button" onclick="location.href='./long128/lrs-long128-unsafe.html'">LRS LONG 128bit unsafe</button>
         </nav>
-    </main>
 </body>
 </html>

@@ -1,6 +1,19 @@
 // worker.js
 // Wasmモジュール（lrs64.js）をimportScriptsで読み込む
-importScripts('./lrs64.js');
+
+const urlParams = new URLSearchParams(self.location.search);
+const wasmModule = urlParams.get('module') || 'lrsmp64.js';
+const wasmModuleDir = urlParams.get('moduleDir') || 'test-modules';
+
+const wasmModulePath = `./${wasmModuleDir}/${wasmModule}`;
+
+var Module = {
+    locateFile: function(path) {
+        return `./test-modules/${path}`;
+    }
+}
+
+importScripts(wasmModulePath);
 console.log('Worker created, waiting for Wasm initialization.');
 
 // Wasmモジュールの初期化完了を待つ

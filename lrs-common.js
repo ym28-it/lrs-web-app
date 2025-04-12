@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const mode = urlParams.get('mode') || 'default';
 
-    const configFilePath = "../mode-config.json";
+    const configFilePath = "./mode-config.json";
 
     let config;
     try {

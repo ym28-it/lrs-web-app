@@ -1,0 +1,37 @@
+{
+    "modes": {
+        "hybrid": {
+            "title": "LRS Hybrid",
+            "headerH3": "LRS Hybrid",
+            "moduleDir": "hybrid",
+            "wasmModule": "hybrid.js"
+        },
+        "mp64": {
+            "title": "LRS MP 64bit",
+            "headerH3": "LRS MP 64bit",
+            "moduleDir": "mp64",
+            "wasmModule": "lrs64.js"
+        },
+        "long64safe": {
+            "title": "LRS Long 64bit safe",
+            "headerH3": "LRS Long 64bit safe",
+            "moduleDir": "long64",
+            "wasmModule": "lrs64-safe.js"
+        },"long128safe": {
+            "title": "LRS Long 128bit safe",
+            "headerH3": "LRS Long 128bit safe",
+            "moduleDir": "long128",
+            "wasmModule": "lrs128-safe.js"
+        },"long64unsafe": {
+            "title": "LRS Long 64bit unsafe",
+            "headerH3": "LRS Long 64bit unsafe",
+            "moduleDir": "long64",
+            "wasmModule": "lrs64-unsafe.js"
+        },"long128unsafe": {
+            "title": "LRS Long 128bit unsafe",
+            "headerH3": "LRS Long 128bit unsafe",
+            "moduleDir": "long128",
+            "wasmModule": "lrs128-unsafe.js"
+        }
+    }
+}

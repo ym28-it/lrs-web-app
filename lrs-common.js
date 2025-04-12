@@ -1,11 +1,39 @@
-// common.js
+// lrs-common.js
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const fileInput = document.getElementById('fileInput');
     const inputArea = document.getElementById('inputArea');
     const outputArea = document.getElementById('outputArea');
     const outputFileNameInput = document.getElementById('outputFileName');
     const runProgramButton = document.getElementById('runProgram');
+
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const mode = urlParams.get('mode') || 'default';
+
+    const configFilePath = "../mode-config.json";
+
+    let config;
+    try {
+        const response = await fetch(configFilePath);
+        config = await response.json();
+        console.log('fetch config file');
+    } catch (error) {
+        console.error('config file reading error:', error);
+        return;
+    }
+
+    const modeConfig = config.modes[mode];
+    console.log('modeConfig:', modeConfig);
+
+    document.title = modeConfig.title;
+
+    const headerH3 = document.querySelector('header h3');
+    if (headerH3) {
+        headerH3.textContent = modeConfig.headerH3;
+    }
+
+    // safe-unsafeボタンは一旦放置（必要な場合実装、いらないかも）
 
     // ファイルアップロード
     if(fileInput){
@@ -35,26 +63,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    let currentWorker = null;
+
     // プログラム実行用の関数
     function runProgram() {
+
+        if (currentWorker !== null) {
+            console.log('Terminate current Worker');
+            currentWorker.terminate();
+            currentWorker = null;
+        }
 
         showLoading();
         outputArea.value = '';
 
         const inputText = inputArea.value;
-        // Workerの作成 (worker.js が実際の処理を担当)
-        const worker = new Worker('worker.js');
 
-        // メインスレッドからWorkerへ入力データを送信
-        console.log('post Input data in common.js');
-        worker.postMessage({ input: inputText });
+        const moduleParam = encodeURIComponent(modeConfig.wasmModule);
+
+        const workerUrl = `./lrs-worker.js?module=${moduleParam}`;
+
+        try {
+            // Workerの作成 (worker.js が実際の処理を担当)
+            currentWorker = new Worker(workerUrl);
+            console.log('create Worker', workerUrl);
+        } catch (err) {
+            console.log('create Worker error:', err);
+        }
 
         // Workerからのメッセージ受信時の処理
-        worker.onmessage = function (e) {
+        currentWorker.onmessage = function (e) {
             // "ready" メッセージを受け取ったら、入力データを送信する
             if (e.data.ready) {
-                console.log('Worker is ready. Sending input data.');
-                worker.postMessage({ input: inputText });
+                console.log('Worker is ready. Sending input data from test-common.js .');
+                currentWorker.postMessage({ input: inputText });
 
             } else if (e.data.error) {
                 outputArea.value = "エラー: " + e.data.error;
@@ -64,16 +106,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 outputArea.value = e.data.result;
                 hideLoading(); // 結果受信後にローディング非表示
                 console.log('hide Loading');
-                worker.terminate(); // Workerの終了（リソース解放）
+                currentWorker.terminate(); // Workerの終了（リソース解放）
             }
         };
 
         // Worker内でエラーが発生した場合の処理
-        worker.onerror = function (err) {
+        currentWorker.onerror = function (err) {
             console.error("Workerエラー: ", err);
             outputArea.value = "Workerエラー: " + err.message;
             hideLoading();
-            worker.terminate();
+            currentWorker.terminate();
         };
     }
 

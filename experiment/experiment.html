@@ -4,22 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LRS test</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
     <header class="header">
-        <a href="./index.html"><h1>LRS by JavaScript</h1></a>
-        <h3>LRS MP 64bit for Wasm Worker Test</h3>
+        <a href="../index.html"><h1>LRS by JavaScript</h1></a>
+        <h3>LRS Experiment</h3>
 
         <div>
             <a href="https://github.com/ym28-it/lrs-web-app.git" target="_blank" rel="noopener" title="View on GitHub">
-                <img src="./images/github-mark/github-mark.png" alt="GitHub">
+                <img src="../images/github-mark/github-mark.png" alt="GitHub">
 
             </a>
         </div>
     </header>
 
     <main class="main">
+        <p>This mode executes all modules in sequence for one input and measures the execution time.</p>
         <label for="fileInput">Upload Input File:</label>
         <input type="file" id="fileInput">
 
@@ -35,14 +36,21 @@
         <div id="loadingIndicator"></div>
 
         <div>
-            <label for="outputArea">Output:</label>
-            <span id="elapsedTime">0 ms</span>
-            <textarea id="outputArea" rows="10" cols="50" readonly></textarea>
+            <label for="resultArea">Experiment-Result:</label>
+            <textarea id="resultArea" rows="10" cols="20" readonly></textarea>
+            <label for="resultFileName">Result File Name:</label>
+            <input type="text" id="ResultFileName" placeholder="experiment-result.txt"><br>
+            <button type="submit" id="downloadResult">Download Result</button>
+        </div>
+
+        <div>
+            <label for="outputArea">Wasm Output:</label>
+            <textarea id="outputArea" rows="10" cols="20" readonly></textarea>
             <label for="outputFileName">Output File Name:</label>
             <input type="text" id="outputFileName" placeholder="output.txt"><br>
             <button type="submit" id="downloadOutput">Download Output</button>
         </div>
     </main>
 
-    <script src="./lrs-common.js"></script>
+    <script src="./experiment.js"></script>
 </body>

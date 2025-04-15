@@ -32,11 +32,14 @@ Module.onRuntimeInitialized = function() {
         console.log('Received input in worker:', input);
 
         try {
-        let results = heavyWasmProcessing(input);
-        // 結果をメインスレッドに返送
-        self.postMessage({ result: results });
+            const start = performance.now();
+            let results = heavyWasmProcessing(input);
+            const end = performance.now();
+            // 結果をメインスレッドに返送
+            self.postMessage({elapsedTime: end-start});
+            self.postMessage({ result: results });
         } catch (err) {
-        self.postMessage({ error: err.toString() });
+            self.postMessage({ error: err.toString() });
         }
     };
 };

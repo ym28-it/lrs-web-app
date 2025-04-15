@@ -45,6 +45,15 @@
             <button class="nav-button" data-mode="long64unsafe" onclick="navigateMode(this)">LRS LONG 64bit unsafe</button>
             <button class="nav-button" data-mode="long128unsafe" onclick="navigateMode(this)">LRS LONG 128bit unsafe</button>
         </nav>
+
+        <div>
+            <h2>Experiment</h2>
+            <p>This mode executes all modules in sequence for one input and measures the execution time.</p>
+            <nav>
+                <button id="experiment" class="nav-button" onclick="goExperiment(this)">Experiment</button>
+            </nav>
+        </div>
+        
     </main>
 
     <script src="./script.js"></script>

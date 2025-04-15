@@ -4,10 +4,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const fileInput = document.getElementById('fileInput');
     const inputArea = document.getElementById('inputArea');
     const outputArea = document.getElementById('outputArea');
+    const elapsedTime = document.getElementById('elapsedTime');
     const outputFileNameInput = document.getElementById('outputFileName');
     const runProgramButton = document.getElementById('runProgram');
 
 
+    // mode-config.jsonの適用
     const urlParams = new URLSearchParams(window.location.search);
     const mode = urlParams.get('mode') || 'default';
 
@@ -100,6 +102,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             } else if (e.data.error) {
                 outputArea.value = "エラー: " + e.data.error;
+
+            }else if (e.data.elapsedTime) {
+                console.log(`elapsedTime: ${e.data.elapsedTime}`);
+                elapsedTime.textContent = `${e.data.elapsedTime} ms`;
 
             } else if (e.data.result) {
                 console.log('get output data');

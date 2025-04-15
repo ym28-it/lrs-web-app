@@ -1,4 +1,4 @@
-// experiment.js
+// experiment2.js
 
 document.addEventListener('DOMContentLoaded', async () => {
     const fileInput = document.getElementById('fileInput');
@@ -74,9 +74,45 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     let currentWorker = null;
 
-    // プログラム実行用の関数
-    function runProgram() {
+    function runWorker(moduleParam, inputText) {
+        return new Promise((resolve, reject) => {
+            const workerUrl = `../lrs-worker.js?module=${moduleParam}`;
+            const worker = new Worker(workerUrl);
+            console.log('create Worker', workerUrl);
 
+            worker.onmessage = function (e) {
+                if (e.data.ready) {
+                    console.log('Worker is ready. Sending input data.');
+                    worker.postMessage({ input: inputText });
+                } else if (e.data.error) {
+                    outputArea.value += "エラー: " + e.data.error;
+                    resultArea.value += "エラー:" + e.data.error;
+                    worker.terminate();
+                    reject(e.data.error);
+                } else if (e.data.elapsedTime) {
+                    console.log(`elapsedTime: ${e.data.elapsedTime}`);
+                    resultArea.value += `${moduleParam}: \n${e.data.elapsedTime} ms\n`;
+                } else if (e.data.result) {
+                    console.log('get output data');
+                    outputArea.value += e.data.result;
+                    outputArea.value += '\n####################################################\n';
+                    worker.terminate();
+                    resolve();
+                }
+            };
+
+            worker.onerror = function (err) {
+                console.error("Workerエラー: ", err);
+                outputArea.value += "Workerエラー: " + err.message;
+                resultArea.value += "Workerエラー:" + err.message;
+                worker.terminate();
+                reject(err);
+            };
+        });
+    }
+
+    // プログラム実行用の関数
+    async function runProgram() {
         logEnvInfo();
 
         if (currentWorker !== null) {
@@ -89,60 +125,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         outputArea.value = '';
 
         const inputText = inputArea.value;
+        const moduleParams = ['hybrid.js', 'lrs64.js', 'lrs64-safe.js', 'lrs64-unsafe.js','lrs128-safe.js', 'lrs128-unsafe.js'];
 
-        const moduleParams = ['hybrid.js', 'lrs64.js', 'lrs64-safe.js', 'lrs128-safe.js'];
+        for (const moduleParam of moduleParams) {
+            await runWorker(moduleParam, inputText);
+        }
 
-        // モジュールごとにWorkerを作って逐次実行する
-        // 実行時間計測はWorkerで行い、その結果を受け取る
-        moduleParams.forEach(moduleParam => {
-            const workerUrl = `../lrs-worker.js?module=${moduleParam}`;
-            let end_flag = false;
-
-            try {
-                // Workerの作成 (worker.js が実際の処理を担当)
-                currentWorker = new Worker(workerUrl);
-                console.log('create Worker', workerUrl);
-            } catch (err) {
-                console.log('create Worker error:', err);
-            }
-
-            // Workerからのメッセージ受信時の処理
-            currentWorker.onmessage = function (e) {
-                // "ready" メッセージを受け取ったら、入力データを送信する
-                if (e.data.ready) {
-                    console.log('Worker is ready. Sending input data from test-common.js .');
-                    currentWorker.postMessage({ input: inputText });
-
-                } else if (e.data.error) {
-                    outputArea.value += "エラー: " + e.data.error;
-                    resultArea.value += "エラー:" + e.data.error;
-
-                } else if (e.data.elapsedTime) {
-                    console.log(`elapsedTime: ${e.data.elapsedTime}`);
-                    resultArea.value += `${moduleParam}: \n`;
-                    resultArea.value += `${e.data.elapsedTime} ms\n`;
-
-                } else if (e.data.result) {
-                    console.log('get output data');
-                    outputArea.value += e.data.result;
-                    outputArea.value += '####################################################\n';
-                    hideLoading(); // 結果受信後にローディング非表示
-                    console.log('hide Loading');
-                    currentWorker.terminate(); // Workerの終了（リソース解放）
-                }
-            };
-
-            // Worker内でエラーが発生した場合の処理
-            currentWorker.onerror = function (err) {
-                console.error("Workerエラー: ", err);
-                outputArea.value += "Workerエラー: " + err.message;
-                resultArea.value += "Workerエラー:" + err.message;
-                hideLoading();
-                currentWorker.terminate();
-            };
-        });
+        hideLoading();
     }
-
 
     if(runProgramButton){
         runProgramButton.addEventListener('click', runProgram);
@@ -165,6 +155,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
             a.download = outputFileName;
+            a.click();
+            URL.revokeObjectURL(a.href);
+        });
+    }
+
+    const resultDownloadBtn = document.getElementById('downloadResult');
+    if(resultDownloadBtn){
+        downloadBtn.addEventListener('click', () => {
+            const outputText = outputArea.value;
+            const resultFileName = resultFileNameInput.value.trim() || 'output.txt';
+            const blob = new Blob([outputText], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = resultFileName;
             a.click();
             URL.revokeObjectURL(a.href);
         });

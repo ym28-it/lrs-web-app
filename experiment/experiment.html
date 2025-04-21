@@ -20,13 +20,13 @@
     </header>
 
     <main class="main">
-        <p>This mode executes all modules in sequence for one input and measures the execution time.</p>
-        <label for="fileInput">Upload Input File:</label>
-        <input type="file" id="fileInput">
+        <p>In this mode, all modules are executed in sequence against uploaded inputs and execution time is measured.</p>
+        <label for="fileInput">Upload Input Files:</label>
+        <input type="file" id="fileInput" multiple>
 
         <div>
-            <label for="inputArea">Input:</label>
-            <textarea id="inputArea" rows="10" cols="50" ></textarea><br>
+            <label for="inputArea">Input files Waiting List:</label>
+            <textarea id="inputArea" rows="10" cols="50" readonly></textarea><br>
             <button type="submit" id="runProgram">
                 Submit
                 <span class="tooltip">Ctrl+Enter or Cmd+Enter</span>
@@ -44,13 +44,12 @@
         </div>
 
         <div>
-            <label for="outputArea">Wasm Output:</label>
-            <textarea id="outputArea" rows="10" cols="20" readonly></textarea>
-            <label for="outputFileName">Output File Name:</label>
-            <input type="text" id="outputFileName" placeholder="output.txt"><br>
-            <button type="submit" id="downloadOutput">Download Output</button>
+            <h4>Execution Time Graph</h4>
+            <canvas id="executionChart" width="800" height="400"></canvas>
         </div>
     </main>
 
-    <script src="./experiment2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="./chart.js"></script>
+    <script type="module" src="./experiment3.js"></script>
 </body>

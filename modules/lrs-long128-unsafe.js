@@ -513,7 +513,7 @@ function createExportWrapper(name, nargs) {
 // include: runtime_exceptions.js
 // end include: runtime_exceptions.js
 function findWasmBinary() {
-    var f = 'lrs64-safe.wasm';
+    var f = 'lrs-long128-unsafe.wasm';
     if (!isDataURI(f)) {
       return locateFile(f);
     }

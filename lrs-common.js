@@ -1,4 +1,5 @@
 // lrs-common.js
+let runProgram;
 
 document.addEventListener('DOMContentLoaded', async () => {
     const fileInput = document.getElementById('fileInput');
@@ -70,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let currentWorker = null;
 
     // プログラム実行用の関数
-    function runProgram() {
+    runProgram = function() {
 
         if (currentWorker !== null) {
             console.log('Terminate current Worker');
@@ -153,4 +154,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             URL.revokeObjectURL(a.href);
         });
     }
+
+    const testFile = urlParams.get('test');
+    console.log('testFile', testFile);
+    if (testFile) {
+        console.log("Excursion");
+        fetch(`./tests/${testFile}`)
+            .then(res => res.text())
+            .then(text => {
+                inputArea.value = text;
+                runProgram(); // Auto Execute
+            })
+            .catch(err => {
+                console.error("Test file load error:", err);
+            });
+    }
+
 });

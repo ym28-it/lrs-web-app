@@ -1,9 +1,0 @@
-{
-    "modes": {
-        "test": {
-            "title": "LRS Test for Wasm Worker",
-            "headerH3": "LRS Test",
-            "wasmModuleDir": "test-modules",
-            "wasmModule": "lrsmp64.js"}
-        }
-}

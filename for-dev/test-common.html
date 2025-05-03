@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LRS test</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header class="header">
+        <a href="./test-index.html"><h1>LRS by JavaScript</h1></a>
+        <h3>LRS MP 64bit for Wasm Worker Test</h3>
+
+        <div>
+            <a href="https://github.com/ym28-it/lrs-web-app.git" target="_blank" rel="noopener" title="View on GitHub">
+                <img src="../images/github-mark/github-mark.png" alt="GitHub">
+
+            </a>
+        </div>
+    </header>
+
+    <main class="main">
+        <label for="fileInput">Upload Input File:</label>
+        <input type="file" id="fileInput">
+
+        <div>
+            <label for="inputArea">Input:</label>
+            <textarea id="inputArea" rows="10" cols="50" ></textarea><br>
+            <button type="submit" id="runProgram">
+                Submit
+                <span class="tooltip">Ctrl+Enter or Cmd+Enter</span>
+            </button>
+        </div>
+
+        <div id="loadingIndicator"></div>
+
+        <div>
+            <label for="outputArea">Output:</label>
+            <textarea id="outputArea" rows="10" cols="50" readonly></textarea>
+            <label for="outputFileName">Output File Name:</label>
+            <input type="text" id="outputFileName" placeholder="output.txt"><br>
+            <button type="submit" id="downloadOutput">Download Output</button>
+        </div>
+    </main>
+
+    <script src="./test-common.js"></script>
+</body>

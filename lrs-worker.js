@@ -3,17 +3,20 @@
 
 const urlParams = new URLSearchParams(self.location.search);
 const wasmModule = urlParams.get('module') || 'lrs64.js';
+const version = urlParams.get('version') || 'v7.3';
 console.log('wasmModule', wasmModule);
+console.log('Version', version);
 
 var Module = {
     locateFile: function(path) {
-        return `./modules/${path}`;
+        return `./modules/${version}/${path}`;
     }
 }
 
 try {
-    importScripts(`./modules/${wasmModule}`);
+    importScripts(`./modules/${version}/${wasmModule}`);
     console.log('Worker created, waiting for Wasm initialization.');
+    console.log(`./modules/${version}/${wasmModule}`);
 } catch (err) {
     console.error('ImportScript error:', err);
     self.postMessage({error: err.toString() });

@@ -2,8 +2,9 @@
 
 function navigateMode(button) {
     const mode = button.getAttribute('data-mode');
+    const version = button.getAttribute('version');
 
-    const targetUrl = `./lrs-common.html?mode=${encodeURIComponent(mode)}`;
+    const targetUrl = `./lrs-common.html?mode=${encodeURIComponent(mode)}&version=${encodeURIComponent(version)}`;
     window.location.href = targetUrl;
 }
 

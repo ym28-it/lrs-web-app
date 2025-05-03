@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // mode-config.jsonの適用
     const urlParams = new URLSearchParams(window.location.search);
     const mode = urlParams.get('mode') || 'default';
+    const version = urlParams.get('version') || 'v7.3';
 
     const configFilePath = "./mode-config.json";
 
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const headerH3 = document.querySelector('header h3');
     if (headerH3) {
         headerH3.textContent = modeConfig.headerH3;
+        headerH3.textContent += ` based on ${version}`;
     }
 
     // safe-unsafeボタンは一旦放置（必要な場合実装、いらないかも）
@@ -83,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const moduleParam = encodeURIComponent(modeConfig.wasmModule);
 
-        const workerUrl = `./lrs-worker.js?module=${moduleParam}`;
+        const workerUrl = `./lrs-worker.js?module=${moduleParam}&version=${version}`;
 
         try {
             // Workerの作成 (worker.js が実際の処理を担当)
@@ -110,6 +112,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             } else if (e.data.result) {
                 console.log('get output data');
                 outputArea.value = e.data.result;
+                outputArea.value += `*** Based on lrs ${version} ***\n`;
                 hideLoading(); // 結果受信後にローディング非表示
                 console.log('hide Loading');
                 currentWorker.terminate(); // Workerの終了（リソース解放）

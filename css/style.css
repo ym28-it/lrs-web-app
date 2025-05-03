@@ -135,3 +135,9 @@ border: 1px solid #ddd;
 0% { transform: translate(-50%, -50%) rotate(0deg); }
 100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
+
+footer {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.9em;
+}

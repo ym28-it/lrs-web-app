@@ -22,39 +22,47 @@
     </header>
 
     <main class="main">
-        <h2>LRS Hybrid</h2>
-        <nav>
-            <button class="nav-button" data-mode="hybrid" onclick="navigateMode(this)">LRS Hybrid Single-Thread</button>
-        </nav>
-
-        <h2>LRS MP</h2>
-        <nav>
-            <button class="nav-button" data-mode="mp64" onclick="navigateMode(this)">LRS MP 64bit</button>
-        </nav>
-
-        <h2>LRS LONG</h2>
-
-        <h3>Overflow checking ON</h3>
-        <nav>
-            <button class="nav-button" data-mode="long64safe" onclick="navigateMode(this)">LRS LONG 64bit safe</button>
-            <button class="nav-button" data-mode="long128safe" onclick="navigateMode(this)">LRS LONG 128bit safe</button>
-        </nav>
-
-        <h3>Overflow checking OFF</h3>
-        <nav>
-            <button class="nav-button" data-mode="long64unsafe" onclick="navigateMode(this)">LRS LONG 64bit unsafe</button>
-            <button class="nav-button" data-mode="long128unsafe" onclick="navigateMode(this)">LRS LONG 128bit unsafe</button>
-        </nav>
-
+        <h1>LRS v7.3</h1>
         <div>
-            <h2>Experiment</h2>
-            <p>This mode executes all modules in sequence for one input and measures the execution time.</p>
+            <h2>LRS Hybrid</h2>
             <nav>
-                <button id="experiment" class="nav-button" onclick="goExperiment(this)">Experiment</button>
+                <button class="nav-button" data-mode="hybrid" version="v7.3" onclick="navigateMode(this)">LRS Hybrid Single-Thread</button>
             </nav>
+
+            <h2>LRS MP</h2>
+            <nav>
+                <button class="nav-button" data-mode="mp64" version="v7.3" onclick="navigateMode(this)">LRS MP 64bit</button>
+            </nav>
+
+            <h2>LRS LONG</h2>
+
+            <h3>Overflow checking ON</h3>
+            <nav>
+                <button class="nav-button" data-mode="long64safe" version="v7.3" onclick="navigateMode(this)">LRS LONG 64bit safe</button>
+                <button class="nav-button" data-mode="long128safe" version="v7.3" onclick="navigateMode(this)">LRS LONG 128bit safe</button>
+            </nav>
+
+            <h3>Overflow checking OFF</h3>
+            <nav>
+                <button class="nav-button" data-mode="long64unsafe" version="v7.3" onclick="navigateMode(this)">LRS LONG 64bit unsafe</button>
+                <button class="nav-button" data-mode="long128unsafe" version="v7.3" onclick="navigateMode(this)">LRS LONG 128bit unsafe</button>
+            </nav>
+
+            <div>
+                <h2>Experiment</h2>
+                <p>This mode executes all modules in sequence for one input and measures the execution time.</p>
+                <nav>
+                    <button id="experiment" class="nav-button" onclick="goExperiment(this)">Experiment</button>
+                </nav>
+            </div>
         </div>
         
+        
     </main>
+
+    <footer class="footer">
+        <p>Developed by Yuta Muraya</p>
+    </footer>
 
     <script src="./script.js"></script>
 

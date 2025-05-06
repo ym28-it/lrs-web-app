@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         currentWorker.onmessage = function (e) {
             // "ready" メッセージを受け取ったら、入力データを送信する
             if (e.data.ready) {
-                console.log('Worker is ready. Sending input data from test-common.js .');
+                console.log('Worker is ready. Sending input data from lrs-common.js .');
                 currentWorker.postMessage({ input: inputText });
 
             } else if (e.data.error) {

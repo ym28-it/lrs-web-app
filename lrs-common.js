@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // ファイルアップロード
     if(fileInput){
         fileInput.addEventListener('change', (event) => {
+            outputArea.value = '';
             const file = event.target.files[0];
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -113,7 +114,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             } else if (e.data.result) {
                 console.log('get output data');
                 outputArea.value = e.data.result;
-                outputArea.value += `*** Based on lrs ${version} ***\n`;
+                outputArea.value += `\n*** Based on lrs ${version} ***\n`;
                 hideLoading(); // 結果受信後にローディング非表示
                 console.log('hide Loading');
                 currentWorker.terminate(); // Workerの終了（リソース解放）

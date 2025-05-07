@@ -1,13 +1,17 @@
-tsp4
+tsp4b
+testlin
 H-representation
 linearity 4  1 2 3 4
 begin
-7 7 rational
+8 7 rational
 -2  1  1  1  0  0  0 
 -2  1  1  0  1  0  0 
  0  0 -1  0  0  1  0 
  0 -1  0  0  0  0  1 
- 1 -1  0  0  0  0  0 
+
+-1  0  1  1  0  0  0 
 -1  1  1  0  0  0  0 
- 1  0 -1  0  0  0  0 
+-1  0 -1  0  0  1  1 
+ 1  0 -1  0  0  0  0
 end
+redund

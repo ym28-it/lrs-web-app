@@ -1,4 +1,4 @@
-pyr
+pyr1
 H-representation
 begin
 5 4 integer
@@ -9,3 +9,4 @@ begin
 0  0  0 -1
 end
 printcobasis
+allbases

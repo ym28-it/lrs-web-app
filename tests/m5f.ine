@@ -1,0 +1,39 @@
+*lrs:lrslib_v.7.4_2025.4.3 (64bit,lrslong.h,hybrid_arithmetic)
+m5
+
+*switching to fel mode
+*eliminate 1  1 
+
+*iteration 1 removing column 1
+*allocating dictionary with 39 rows
+*removing redundant rows
+H-representation
+begin
+21 10 rational
+ 0 -1  1  0  0  0  0  1  0  0 
+ 0  1 -1  0  0  0  0  1  0  0 
+ 0  1  1  0  0  0  0 -1  0  0 
+ 0 -1  0  1  0  0  0  0  1  0 
+ 0  1  0 -1  0  0  0  0  1  0 
+ 0  1  0  1  0  0  0  0 -1  0 
+ 0  0 -1  1  0  0  0  0  0  1 
+ 0  0  1 -1  0  0  0  0  0  1 
+ 0  0  1  1  0  0  0  0  0 -1 
+ 0  0  0  0 -1  1  0  1  0  0 
+ 0  0  0  0  1 -1  0  1  0  0 
+ 0  0  0  0  1  1  0 -1  0  0 
+ 0  0  0  0 -1  0  1  0  1  0 
+ 0  0  0  0  1  0 -1  0  1  0 
+ 0  0  0  0  1  0  1  0 -1  0 
+ 0  0  0  0  0 -1  1  0  0  1 
+ 0  0  0  0  0  1 -1  0  0  1 
+ 0  0  0  0  0  1  1  0  0 -1 
+ 0  0  0  0  0  0  0 -1  1  1 
+ 0  0  0  0  0  0  0  1 -1  1 
+ 0  0  0  0  0  0  0  1  1 -1 
+end
+
+*original vars remaining: 2 3 4 5 6 7 8 9 10
+
+*lrs:lrslib_v.7.4_2025.4.3 (64bit,lrslong.h,hybrid_arithmetic)
+*0.000u 0.000s 1156Kb 0 flts 0 swaps 0 blks-in 0 blks-out 

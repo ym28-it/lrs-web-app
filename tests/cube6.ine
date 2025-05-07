@@ -1,11 +1,13 @@
-cube2
+cube6
 H-representation
 begin
-5 4 rational
+7 4 rational
  0  1  0  0 
  0  0  1  0 
+ 0  0  0  1 
  1 -1  0  0 
  1  0 -1  0 
  1  0  0 -1 
+-1  0  0  1 
 end
-printcobasis
+project 2   1 3

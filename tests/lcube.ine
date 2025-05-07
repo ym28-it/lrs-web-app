@@ -1,4 +1,5 @@
-cube2
+lcube
+linearity 1 5
 H-representation
 begin
 5 4 rational
@@ -8,4 +9,3 @@ begin
  1  0 -1  0 
  1  0  0 -1 
 end
-printcobasis

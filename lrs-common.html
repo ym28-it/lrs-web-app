@@ -23,25 +23,27 @@
         <label for="fileInput">Upload Input File:</label>
         <input type="file" id="fileInput">
 
-        <div>
-            <label for="inputArea">Input:</label>
-            <textarea id="inputArea" rows="10" cols="50" ></textarea><br>
-            <button type="submit" id="runProgram">
-                Submit
-                <span class="tooltip">Ctrl+Enter or Cmd+Enter</span>
-            </button>
-        </div>
+        <div class="io-wrapper">
+            <div id="input">
+                <label for="inputArea">Input:</label>
+                <textarea id="inputArea" rows="10" cols="50" ></textarea><br>
+                <button type="submit" id="runProgram">
+                    Submit
+                    <span class="tooltip">Ctrl+Enter or Cmd+Enter</span>
+                </button>
+            </div>
 
+            <div id="output">
+                <label for="outputArea">Output:</label>
+                <span id="elapsedTime">0 ms</span>
+                <textarea id="outputArea" rows="10" cols="50" readonly></textarea>
+                <label for="outputFileName">Output File Name InputArea:</label>
+                <input type="text" id="outputFileName" placeholder="output.txt"><br>
+                <button type="submit" id="downloadOutput">Download Output File</button>
+            </div>
+        </div>
+        
         <div id="loadingIndicator"></div>
-
-        <div>
-            <label for="outputArea">Output:</label>
-            <span id="elapsedTime">0 ms</span>
-            <textarea id="outputArea" rows="10" cols="50" readonly></textarea>
-            <label for="outputFileName">Output File Name:</label>
-            <input type="text" id="outputFileName" placeholder="output.txt"><br>
-            <button type="submit" id="downloadOutput">Download Output</button>
-        </div>
     </main>
 
     <script src="./lrs-common.js"></script>

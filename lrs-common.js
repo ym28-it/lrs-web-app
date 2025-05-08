@@ -115,7 +115,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             } else if (e.data.result) {
                 console.log('get output data');
-                outputArea.value = e.data.result;
+                let processedOutput = e.data.result.replace(/^\*this\.program:/m, '*jlrs:');
+
+                outputArea.value = processedOutput;
                 outputArea.value += `\n*** Based on lrs ${version} ***\n`;
                 hideLoading(); // 結果受信後にローディング非表示
                 console.log('hide Loading');

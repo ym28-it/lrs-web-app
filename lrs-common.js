@@ -108,6 +108,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             } else if (e.data.error) {
                 outputArea.value = "エラー: " + e.data.error;
+                hideLoading();
+                currentWorker.terminate();
 
             }else if (e.data.elapsedTime) {
                 console.log(`elapsedTime: ${e.data.elapsedTime}`);
@@ -115,9 +117,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             } else if (e.data.result) {
                 console.log('get output data');
-                let processedOutput = e.data.result.replace(/^\*this\.program:/m, '*jlrs:');
 
-                outputArea.value = processedOutput;
+                outputArea.value = e.data.result;
                 outputArea.value += `\n*** Based on lrs ${version} ***\n`;
                 hideLoading(); // 結果受信後にローディング非表示
                 console.log('hide Loading');

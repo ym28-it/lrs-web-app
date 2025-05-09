@@ -1,11 +1,32 @@
 {
     "modes": {
-        "hybrid": {
-            "title": "LRS Hybrid",
-            "headerH3": "LRS Hybrid",
-            "moduleDir": "hybrid",
-            "wasmModule": "hybrid.js"
-            
+        "hybrid-gmp": {
+            "title": "LRS Hybrid GMP",
+            "headerH3": "LRS Hybrid GMP",
+            "moduleDir": "hybrid-gmp",
+            "wasmModule": "hybrid-gmp.js"
+
+        },
+        "hybrid-minigmp": {
+            "title": "LRS Hybrid miniGMP",
+            "headerH3": "LRS Hybrid miniGMP",
+            "moduleDir": "hybrid-minigmp",
+            "wasmModule": "hybrid-minigmp.js"
+
+        },
+        "gmp": {
+            "title": "LRS GMP",
+            "headerH3": "LRS GMP",
+            "moduleDir": "gmp",
+            "wasmModule": "lrs-gmp.js"
+
+        },
+        "minigmp": {
+            "title": "LRS miniGMP",
+            "headerH3": "LRS miniGMP",
+            "moduleDir": "minigmp",
+            "wasmModule": "lrs-minigmp.js"
+
         },
         "mp64": {
             "title": "LRS MP 64bit",

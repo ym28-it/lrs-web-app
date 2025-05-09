@@ -42,6 +42,7 @@ Module.onRuntimeInitialized = function() {
             self.postMessage({elapsedTime: end-start});
             self.postMessage({ result: results });
         } catch (err) {
+            console.log("Error in onRuntimeInitialized:\n", err);
             self.postMessage({ error: err.toString() });
         }
     };

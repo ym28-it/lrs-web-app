@@ -14,38 +14,124 @@ This repository hosts the WebAssembly version of the LRS (Lexicographic Reverse 
 
 ```
 .
-├── index.html         # Main index page for navigation.
-├── README.md              # Documentation for the project.
-├── mp64/                  # Directory for MP (Multiple Precision) version.
-│   ├── lrs-mp64.html
-│   ├── lrs64.js
-│   └── lrs64.wasm
-├── long64/                # Directory for 64-bit versions.
-│   ├── lrs-long64-safe.html
-│   ├── lrs-long64-unsafe.html
-│   ├── lrs64-safe.js
-│   ├── lrs64-unsafe.js
-│   ├── lrs64-safe.wasm
-│   ├── lrs64-unsafe.wasm
-│   └── lrs64.wasm
-├── long128/               # Directory for 128-bit versions.
-│   ├── lrs-long128-safe.html
-│   ├── lrs-long128-unsafe.html
-│   ├── lrs128-safe.js
-│   ├── lrs128-unsafe.js
-│   ├── lrs128-safe.wasm
-│   └── lrs128-unsafe.wasm
+│  COPYING
+│  directory_tree.txt
+│  index.html
+│  lrs-common.html
+│  lrs-common.js
+│  lrs-worker.js
+│  mode-config.json
+│  README.md
+│  script.js
+│  
+├─css
+│      style.css
+│
+├─experiment
+│      chart.js
+│      experiment.html
+│      experiment.js
+│      experiment2.js
+│      experiment3.js
+│
+├─ext
+│  ├─metric
+│  │
+│  ├─redund
+│  │
+│  ├─test
+│  │
+│  └─tsp
+│
+├─for-dev
+│  │  directory_tree.txt
+│  │  test-common.html
+│  │  test-common.js
+│  │  test-config.json
+│  │  test-index.html
+│  │  test-index.js
+│  │  test-worker.js
+│  │
+│  └─test-modules
+│          lrsmp64.js
+│          lrsmp64.wasm
+│
+├─images
+│  ├─github-mark
+│  │      github-mark-white.png
+│  │      github-mark-white.svg
+│  │      github-mark.png
+│  │      github-mark.svg
+│  │
+│  └─__MACOSX
+│      │  ._github-mark
+│      │
+│      └─github-mark
+│              ._github-mark-white.png
+│              ._github-mark-white.svg
+│              ._github-mark.png
+│              ._github-mark.svg
+│
+├─ine
+│  ├─afsa
+│  │
+│  ├─metric
+│  │
+│  ├─mit
+│  │
+│  ├─polybase
+│  │
+│  ├─project
+│  │  │
+│  │  ├─hec
+│  │  │
+│  │  └─ieq
+│  │
+│  ├─redund
+│  │  │
+│  │  └─hidden
+│  │
+│  ├─test
+│  │
+│  ├─test-062
+│  │  │
+│  │  ├─normaliz
+│  │  │
+│  │  └─porta
+│  │
+│  └─test-072
+│
+├─js
+├─modules
+│  ├─v7.3
+│  │      hybrid-gmp.js
+│  │      hybrid-gmp.wasm
+│  │      hybrid-minigmp.js
+│  │      hybrid-minigmp.wasm
+│  │      lrs-gmp.js
+│  │      lrs-gmp.wasm
+│  │      lrs-long128-safe.js
+│  │      lrs-long128-safe.wasm
+│  │      lrs-long128-unsafe.js
+│  │      lrs-long128-unsafe.wasm
+│  │      lrs-long64-safe.js
+│  │      lrs-long64-safe.wasm
+│  │      lrs-long64-unsafe.js
+│  │      lrs-long64-unsafe.wasm
+│  │      lrs-minigmp.js
+│  │      lrs-minigmp.wasm
+│  │      lrs-mp64.js
+│  │      lrs-mp64.wasm
+│  │
+│  └─v7.4
+└─tests
 ```
 
 ## Getting Started
 
-1. Clone this repository:
+This project is deployed via GitHub Pages. To access the deployed version, visit:
 
-   ```bash
-   git clone https://github.com/yourusername/lrs-web-app.git
-   ```
-
-2. Open `lrs-index.html` in your browser to access the main navigation page.
+[https://github.com/ym28-it/lrs-web-app.io](https://ym28-it.github.io/lrs-web-app/)
 
 ## Usage
 
@@ -53,22 +139,28 @@ This repository hosts the WebAssembly version of the LRS (Lexicographic Reverse 
 
 Enter the input data in the text area labeled `Input`. The data format should follow the standard LRS input format.
 
+You can upload input file on your computer.
+
 ### Execution
 
 Click the `Submit` button to execute the program. The output will be displayed in the `Output` text area.
 
-### Modes
+You can also do it by pressing Ctrl+Enter (Cmd+Enter).
+
+### Modules
+
+- **hybrid GMP**
+- **hybrid miniGMP**
+- **lrs mp64bit**
+- **lrs long64bit**
+- **lrs long128bit**
+- **lrs gmp**
+- **lrs minigmp**
+
+### Modes (lrs long　only)
 
 - **Safe Mode**: Provides overflow checking for arithmetic operations.
 - **Unsafe Mode**: Does not perform overflow checks, offering potentially faster computations.
-
-## Deployment
-
-This project is deployed via GitHub Pages. To access the deployed version, visit:
-
-```
-https://yourusername.github.io/lrs-web-app/
-```
 
 ## Development
 
@@ -79,27 +171,49 @@ https://yourusername.github.io/lrs-web-app/
 
 ### Building from Source
 
-1. Install [Emscripten](https://emscripten.org/).
-2. Download the source files for LRS from [here](https://cgm.cs.mcgill.ca/~avis/C/lrslib/archive/lrslib-073.tar.gz):
+1. Install
+
+   ```bash
+   apt install -y git python3 xz-utils tar
+   git clone https://github.com/emscripten-core/emsdk.git
+   ```
+   
+2. Setup env
+
+   ```bash
+   cd emsdk
+   ./emsdk install latest
+   ./emsdk activate latest
+   source ./emsdk_env.sh
+   ```
+   
+3. Download the source files for LRS from [here](https://cgm.cs.mcgill.ca/~avis/C/lrslib/archive/lrslib-073.tar.gz):
 
    ```bash
    wget https://cgm.cs.mcgill.ca/~avis/C/lrslib/archive/lrslib-073.tar.gz
    ```
 
-3. Extract the downloaded archive:
+4. Extract the downloaded archive:
 
    ```bash
    tar -xvzf lrslib-073.tar.gz
    ```
 
-4. Navigate to the extracted directory and compile the LRS C code to WebAssembly:
+5. Modify makefile and compile the LRS C code to WebAssembly:
 
-   ```bash
-   cd lrslib-073
-   emcc input-file.c -o output-file.js -s EXPORTED_RUNTIME_METHODS="['FS', 'callMain']" -s ENVIRONMENT="web" -s ALLOW_MEMORY_GROWTH=1
+   ```makefile
+   CC = emcc
+   CFLAGS = -O2 -Wall -s ALLOW_MEMORY_GROWTH=1 -s ENVIRONMENT="web" -s SAFE_HEAP=1 -s STACK_SIZE=8388608 \
+         -s EXPORTED_RUNTIME_METHODS="['FS', 'callMain']" -I./lrsarith-011
+   lrs: ${LRSOBJ} ${LRSOBJ2}
+	      $(CC) ${CFLAGS} ${PLRSFLAGS} -DMA ${BITS} -L${LIBDIR} -o lrs.js ${LRSOBJ} ${LRSOBJ2} ${MINI} ${GMP}
    ```
 
-5. Replace the JavaScript and WebAssembly files in the respective directories.
+   ```bash
+   make lrs
+   ```
+
+6. Replace the JavaScript and WebAssembly files in the respective directories.
 
 ## Source Code Attribution
 
@@ -129,6 +243,11 @@ These features remain as potential future enhancements to this WebAssembly versi
 ### January 28, 2025
 
 - Added Hybrid Mode for combining different arithmetic modes to optimize performance.
+
+### Apr 12, 2025
+
+- Integrate common parts of JavaScript and HTML
+- Differences are managed in the mode-config.json file
 
 ## License
 

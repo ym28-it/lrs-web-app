@@ -39,11 +39,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // safe-unsafeボタンは一旦放置（必要な場合実装、いらないかも）
+    let currentWorker = null;
 
     // ファイルアップロード
     if(fileInput){
         fileInput.addEventListener('change', (event) => {
             outputArea.value = '';
+            if (currentWorker !== null) {
+                console.log('Terminate current Worker');
+                currentWorker.terminate();
+                currentWorker = null;
+            }
             const file = event.target.files[0];
             const reader = new FileReader();
             reader.onload = (e) => {
@@ -70,8 +76,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             loader.style.display = 'none';
         }
     }
-
-    let currentWorker = null;
 
     // プログラム実行用の関数
     runProgram = function() {
@@ -164,12 +168,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const testFile = urlParams.get('test');
     console.log('testFile', testFile);
     if (testFile) {
-        console.log("Excursion");
+        console.log("Upload input file");
         fetch(`./tests/${testFile}`)
             .then(res => res.text())
             .then(text => {
                 inputArea.value = text;
-                runProgram(); // Auto Execute
+                // runProgram(); // Auto Execute
+                const baseName = testFile.replace(/\.[^/.]+$/, '');
+                outputFileNameInput.placeholder = `${baseName}.out`;
             })
             .catch(err => {
                 console.error("Test file load error:", err);

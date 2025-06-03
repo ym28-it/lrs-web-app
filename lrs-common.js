@@ -77,6 +77,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+
+    function getTimeInProcess(start) {
+        const timeInProcess = setInterval(() => {
+            const end = performance.now();
+            const elapsed = (end - start) / 1000;
+            elapsedTime.textContent = `${elapsed.toFixed(2)} s`;
+            console.log(`Processing time: ${elapsed.toFixed(2)} s`);
+            // Workerに経過時間を送信
+        }, 1000);
+
+        return timeInProcess;
+    }
+
     // プログラム実行用の関数
     runProgram = function() {
 
@@ -88,6 +101,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         showLoading();
         outputArea.value = '';
+
+        elapsedTime.textContent = '0.00 s'; // 初期化
+        const start = performance.now();
+        const timeInProcess = getTimeInProcess(start);
+        console.log('start processing');
+
 
         const inputText = inputArea.value;
 
@@ -114,10 +133,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                 outputArea.value = "エラー: " + e.data.error;
                 hideLoading();
                 currentWorker.terminate();
+                console.error("Workerエラー: ", e.data.error);
+                clearInterval(timeInProcess); // タイマーをクリア
 
-            }else if (e.data.elapsedTime) {
-                console.log(`elapsedTime: ${e.data.elapsedTime}`);
-                elapsedTime.textContent = `${e.data.elapsedTime} ms`;
+            } else if (e.data.elapsedTime) {
+                console.log(`elapsedTime: ${e.data.elapsedTime / 1000} s`);
+                // Workerからの処理時間を受け取った場合
+                clearInterval(timeInProcess); // タイマーをクリア
+                // elapsedTimeを更新
+                console.log('update elapsedTime');
+                elapsedTime.textContent = `${(e.data.elapsedTime / 1000).toFixed(2)} s`;
 
             } else if (e.data.result) {
                 console.log('get output data');
@@ -127,6 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 hideLoading(); // 結果受信後にローディング非表示
                 console.log('hide Loading');
                 currentWorker.terminate(); // Workerの終了（リソース解放）
+
             }
         };
 

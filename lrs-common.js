@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             .then(res => res.text())
             .then(text => {
                 inputArea.value = text;
-                runProgram(); // Auto Execute
+                // runProgram(); // Auto Execute
             })
             .catch(err => {
                 console.error("Test file load error:", err);

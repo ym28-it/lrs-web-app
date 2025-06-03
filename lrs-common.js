@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             elapsedTime.textContent = `${elapsed.toFixed(2)} s`;
             console.log(`Processing time: ${elapsed.toFixed(2)} s`);
             // Workerに経過時間を送信
-        }, 1000);
+        }, 50);
 
         return timeInProcess;
     }

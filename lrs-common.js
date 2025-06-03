@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const end = performance.now();
             const elapsed = (end - start) / 1000;
             elapsedTime.textContent = `${elapsed.toFixed(2)} s`;
-            console.log(`Processing time: ${elapsed.toFixed(2)} s`);
+            // console.log(`Processing time: ${elapsed.toFixed(2)} s`);
             // Workerに経過時間を送信
         }, 50);
 

@@ -12,7 +12,7 @@ This repository hosts the WebAssembly version of the LRS (Lexicographic Reverse 
 
 ## Directory Structure
 
-```
+```bash
 .
 │  COPYING
 │  directory_tree.txt
@@ -20,6 +20,7 @@ This repository hosts the WebAssembly version of the LRS (Lexicographic Reverse 
 │  lrs-common.html
 │  lrs-common.js
 │  lrs-worker.js
+│  makefile
 │  mode-config.json
 │  README.md
 │  script.js
@@ -174,17 +175,18 @@ You can also do it by pressing Ctrl+Enter (Cmd+Enter).
 1. Install
 
    ```bash
-   apt install -y git python3 xz-utils tar
+   apt install -y git python3 xz-utils tar build-essential wget m4
    git clone https://github.com/emscripten-core/emsdk.git
    ```
    
-2. Setup env
+2. Setup Emcc
 
    ```bash
    cd emsdk
    ./emsdk install latest
    ./emsdk activate latest
    source ./emsdk_env.sh
+   emcc -v
    ```
    
 3. Download the source files for LRS from [here](https://cgm.cs.mcgill.ca/~avis/C/lrslib/archive/lrslib-073.tar.gz):
@@ -199,11 +201,45 @@ You can also do it by pressing Ctrl+Enter (Cmd+Enter).
    tar -xvzf lrslib-073.tar.gz
    ```
 
-5. Modify makefile and compile the LRS C code to WebAssembly:
+5. Install GMP
+   Since emcc does not support GMP, install the GMP source code and specify it directly.
+
+   ```bash
+   wget https://gmplib.org/download/gmp-6.2.1/gmp-6.2.1.tar.xz
+   tar -xf gmp-6.2.1.tar.xz
+   cd gmp-6.2.1
+   emconfigure ./configure --host=none --disable-assembly HOST_CC=gcc
+   emmake make -j
+   emmake make install
+   ```
+
+6. Change the string “this.program” in the generated .js file to a program name beginning with “lrs”.
+
+   To support the options “project” and “eliminate”
+
+   Before
+
+   ```js
+   var thisProgram="this.program"
+   ```
+
+   After
+
+   ```js
+   var thisProgram="lrs-js"
+   ```
+
+
+7. Modify makefile and compile the LRS C code to WebAssembly:
+
+   Please refer to the makefile I used for compilation in this repository.
+
+   ex)
 
    ```makefile
    CC = emcc
-   CFLAGS = -O2 -Wall -s ALLOW_MEMORY_GROWTH=1 -s ENVIRONMENT="web" -s SAFE_HEAP=1 -s STACK_SIZE=8388608 \
+   GMP=-DGMP -I./gmp-6.2.1 -L./gmp-6.2.1/.libs -lgmp
+   CFLAGS = -O3 -Wall -s ALLOW_MEMORY_GROWTH=1 -s ENVIRONMENT="web" -s SAFE_HEAP=1 -s STACK_SIZE=8388608 \
          -s EXPORTED_RUNTIME_METHODS="['FS', 'callMain']" -I./lrsarith-011
    lrs: ${LRSOBJ} ${LRSOBJ2}
 	      $(CC) ${CFLAGS} ${PLRSFLAGS} -DMA ${BITS} -L${LIBDIR} -o lrs.js ${LRSOBJ} ${LRSOBJ2} ${MINI} ${GMP}
@@ -213,7 +249,6 @@ You can also do it by pressing Ctrl+Enter (Cmd+Enter).
    make lrs
    ```
 
-6. Replace the JavaScript and WebAssembly files in the respective directories.
 
 ## Source Code Attribution
 

@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             };
             if (file) {
             reader.readAsText(file);
-            const baseName = file.name.replace(/\.[^/.]+$/, "");  // 拡張子除去
+            const baseName = file.name;  // 拡張子除去
             outputFileNameInput.placeholder = `${baseName}.out`;
             }
         });
@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             .then(text => {
                 inputArea.value = text;
                 // // runProgram(); // Auto Execute
-                const baseName = testFile.replace(/\.[^/.]+$/, '');
+                const baseName = testFile;
                 outputFileNameInput.placeholder = `${baseName}.out`;
             })
             .catch(err => {

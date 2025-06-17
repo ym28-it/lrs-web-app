@@ -9,7 +9,7 @@
 <body>
     <header class="header">
         <a href="./index.html"><h1>LRS by JavaScript</h1></a>
-        <h3>LRS MP 64bit for Wasm Worker Test</h3>
+        <h3>LRS Hybrid GMP</h3>
 
         <div>
             <a href="https://github.com/ym28-it/lrs-web-app.git" target="_blank" rel="noopener" title="View on GitHub">
@@ -20,8 +20,18 @@
     </header>
 
     <main class="main">
-        <label for="fileInput">Upload Input File:</label>
-        <input type="file" id="fileInput">
+        <div>
+            <label for="fileInput">Upload Own Input File:</label>
+            <input type="file" id="fileInput">
+
+            <!-- <div>
+                <label for="server-file">Browse Sample Inputs:</label>
+                <select id="server-file">
+                    <option value="">-- select a file --</option>
+                </select>
+            </div> -->
+        </div>
+        
 
         <div class="io-wrapper">
             <div id="input">
@@ -46,5 +56,5 @@
         <div id="loadingIndicator"></div>
     </main>
 
-    <script src="./lrs-common.js"></script>
+    <script type="module" src="./lrs-common.js"></script>
 </body>

@@ -1,4 +1,8 @@
 // lrs-common.js
+import { getFileListJSON } from "./dir-structure.js";
+import { renderFileSelector } from "./filelist-ui.js";
+import { setupInputSelector } from "./input-handler.js";
+
 let runProgram;
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -8,6 +12,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const elapsedTime = document.getElementById('elapsedTime');
     const outputFileNameInput = document.getElementById('outputFileName');
     const runProgramButton = document.getElementById('runProgram');
+    const selectElem = document.getElementById('server-file');
+
+    // const filelist = await getFileListJSON();
+    // console.log('filelist', filelist);
+    // renderFileSelector(filelist, selectElem);
+    // setupInputSelector(selectElem, inputArea);
 
 
     // mode-config.jsonの適用

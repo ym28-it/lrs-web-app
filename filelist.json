@@ -1,0 +1,16 @@
+{
+    "ext": {
+        "metric": [],
+        "redund": [],
+        "test": [],
+        "tsp": [
+            "tsp4.ext",
+            "tsp5.ext",
+            "tsp6.ext",
+            "tsp7.ext"
+            ]
+    },
+    "ine": {
+        "afsa": []
+    }
+}

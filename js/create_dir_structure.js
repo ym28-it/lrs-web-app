@@ -10,8 +10,21 @@ function saveFileStructure(path, files) {
     fileStructure[top][subKey] = files;
 }
 
-
 function searchDir(path) {
+    console.log('call searchDir', path);
+    return fetch(path)
+        .then(res => res.text())
+        .then(data => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, "text/html");
+            const links = Array.from(doc.querySelectorAll('a'));
+            
+            console.log('Links from parse', links);
+        })
+}
+
+
+function searchDir_test(path) {
     return fetch(path)
         .then(res => res.text())
         .then(data => {

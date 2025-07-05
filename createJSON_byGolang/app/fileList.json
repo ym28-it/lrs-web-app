@@ -1,39 +1,39 @@
 {
     "Name": "inputs",
-    "IsDir": "true",
+    "IsDir": true,
     "Children": [
         {
             "Name": "ext",
-            "IsDir": "true",
+            "IsDir": true,
             "Children": [
                 {
                     "Name": "ext1",
-                    "IsDir": "true",
+                    "IsDir": true,
                     "Children": [
                         {
                             "Name": "test.ext",
-                            "IsDir": "false",
+                            "IsDir": true,
                             "Children": null
                         },
                         {
                             "Name": "test2.ext",
-                            "IsDir": "false",
+                            "IsDir": true,
                             "Children": null
                         }
                     ]
                 },
                 {
                     "Name": "ext2",
-                    "IsDir": "true",
+                    "IsDir": true,
                     "Children": [
                         {
                             "Name": "second.ext",
-                            "IsDir": "false",
+                            "IsDir": true,
                             "Children": null
                         },
                         {
                             "Name": "second2.ext",
-                            "IsDir": "false",
+                            "IsDir": true,
                             "Children": null
                         }
                     ]
@@ -42,36 +42,36 @@
         },
         {
             "Name": "ine",
-            "IsDir": "true",
+            "IsDir": true,
             "Children": [
                 {
                     "Name": "ine1",
-                    "IsDir": "true",
+                    "IsDir": true,
                     "Children": [
                         {
                             "Name": "first.ine",
-                            "IsDir": "false",
+                            "IsDir": true,
                             "Children": null
                         },
                         {
                             "Name": "first2.ine",
-                            "IsDir": "false",
+                            "IsDir": true,
                             "Children": null
                         }
                     ]
                 },
                 {
                     "Name": "ine2",
-                    "IsDir": "true",
+                    "IsDir": true,
                     "Children": [
                         {
                             "Name": "second.ine",
-                            "IsDir": "false",
+                            "IsDir": true,
                             "Children": null
                         },
                         {
                             "Name": "second2.ine",
-                            "IsDir": "false",
+                            "IsDir": true,
                             "Children": null
                         }
                     ]

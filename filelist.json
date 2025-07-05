@@ -1,16 +1,1387 @@
 {
-    "ext": {
-        "metric": [],
-        "redund": [],
-        "test": [],
-        "tsp": [
-            "tsp4.ext",
-            "tsp5.ext",
-            "tsp6.ext",
-            "tsp7.ext"
+    "Name": "inputs",
+    "IsDir": true,
+    "Children": [
+        {
+            "Name": "ext",
+            "IsDir": true,
+            "Children": [
+                {
+                    "Name": "metric",
+                    "IsDir": true,
+                    "Children": [
+                        {
+                            "Name": "c6.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "c6.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "c7.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "c7.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cp4.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cp5.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cp6.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cp6.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cp7.ext",
+                            "IsDir": true,
+                            "Children": null
+                        }
+                    ]
+                },
+                {
+                    "Name": "redund",
+                    "IsDir": true,
+                    "Children": [
+                        {
+                            "Name": "cube.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "f1000_10.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "f1000_10.extmin.ine.tail",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r100_5.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r100_5.extmin",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r100_5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r100_5.ine.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r2000_5.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r2000_5.ext160",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r2000_5.extredc",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r20_5.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r20k_5.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r4000_5.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r40_5.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r500_5.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r500_5.extmin",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r500_5.extredc",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r5k_100.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r5k_100.ext32",
+                            "IsDir": true,
+                            "Children": null
+                        }
+                    ]
+                },
+                {
+                    "Name": "test",
+                    "IsDir": true,
+                    "Children": [
+                        {
+                            "Name": "Mit.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "c30-15.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cube.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cut16_11.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cut32_16.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cyclic25_13.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mit33.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mp5.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "simp15.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "tsp5.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "vol1.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "vol2.ext",
+                            "IsDir": true,
+                            "Children": null
+                        }
+                    ]
+                },
+                {
+                    "Name": "tsp",
+                    "IsDir": true,
+                    "Children": [
+                        {
+                            "Name": "tsp4.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "tsp5.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "tsp6.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "tsp7.ext",
+                            "IsDir": true,
+                            "Children": null
+                        }
+                    ]
+                }
             ]
-    },
-    "ine": {
-        "afsa": []
-    }
+        },
+        {
+            "Name": "ine",
+            "IsDir": true,
+            "Children": [
+                {
+                    "Name": "afsa",
+                    "IsDir": true,
+                    "Children": [
+                        {
+                            "Name": "cp6.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "ctype.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "ducube.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "ducube2.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "hec.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "lambda.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "lambda2.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r500.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "sphere.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "sphere2.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "tsp7.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "ucube.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "ucube2.ine",
+                            "IsDir": true,
+                            "Children": null
+                        }
+                    ]
+                },
+                {
+                    "Name": "metric",
+                    "IsDir": true,
+                    "Children": [
+                        {
+                            "Name": "cert1.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cert2.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cp4.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cp5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cp6.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mp5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mp6.ine",
+                            "IsDir": true,
+                            "Children": null
+                        }
+                    ]
+                },
+                {
+                    "Name": "mit",
+                    "IsDir": true,
+                    "Children": [
+                        {
+                            "Name": "mit.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mit288-281.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mit31-20.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mit41-16.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mit708-9.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mit71-61.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mit90-86.ine",
+                            "IsDir": true,
+                            "Children": null
+                        }
+                    ]
+                },
+                {
+                    "Name": "polybase",
+                    "IsDir": true,
+                    "Children": [
+                        {
+                            "Name": "PolyBase.pdf",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "README.txt",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "dwarfcube.pl",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "metric.pl",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "randsphere.c",
+                            "IsDir": true,
+                            "Children": null
+                        }
+                    ]
+                },
+                {
+                    "Name": "project",
+                    "IsDir": true,
+                    "Children": [
+                        {
+                            "Name": "cube.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "hec",
+                            "IsDir": true,
+                            "Children": [
+                                {
+                                    "Name": "README",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "h3.ext",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "h3.ine",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "h4.ext",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "h4.ine",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "h5.ext",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "h5.ine",
+                                    "IsDir": true,
+                                    "Children": null
+                                }
+                            ]
+                        },
+                        {
+                            "Name": "ieq",
+                            "IsDir": true,
+                            "Children": [
+                                {
+                                    "Name": "ine2ieq",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "rc100-4.ieq",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "rc100-5.ieq",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "rc20-5.ieq",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "rc250-5.ieq",
+                                    "IsDir": true,
+                                    "Children": null
+                                }
+                            ]
+                        },
+                        {
+                            "Name": "metric80_16.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mit.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mp5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mp5a.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mp5b.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mp5c.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mp5c.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "rc100-4.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "rc100-5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "rc1000-5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "rc20-5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "rc2000-5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "rc250-5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "rc272-5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "rc4000-5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "rc500-5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "tsp4.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "tsp4.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "tsp5.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "tsp5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "tsp6.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "tsp6.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "tsp7.ext",
+                            "IsDir": true,
+                            "Children": null
+                        }
+                    ]
+                },
+                {
+                    "Name": "redund",
+                    "IsDir": true,
+                    "Children": [
+                        {
+                            "Name": "c4.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "c4a.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cube.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "hidden",
+                            "IsDir": true,
+                            "Children": [
+                                {
+                                    "Name": "c1.ine",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "c2.ine",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "c2a.ine",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "cp4.ine",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "metric80_16.ine",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "rcube.ine",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "s0.ine",
+                                    "IsDir": true,
+                                    "Children": null
+                                }
+                            ]
+                        },
+                        {
+                            "Name": "metric80_16.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mit.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mp5a.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mp5b.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mp5c.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r100_5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r2000_5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r2000_5.redund",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r2000_5.redundc",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r20_5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r35_5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r4000_5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "r500_5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        }
+                    ]
+                },
+                {
+                    "Name": "test",
+                    "IsDir": true,
+                    "Children": [
+                        {
+                            "Name": "cp4.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cross4.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cube.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cyclic17_8.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "diamond.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "ep.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "in0.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "in1.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "in2.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "in3.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "in4.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "in5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "in6.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "in7.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "inf.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "kkd38_6.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "kq20_11.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "kq20_11a.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "lcube.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "left.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "metric40_11.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "metric80_16.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mit.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mit31_20.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mp5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "right.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "trunc10.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "trunc7.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "truss2.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "tsp5.ine",
+                            "IsDir": true,
+                            "Children": null
+                        }
+                    ]
+                },
+                {
+                    "Name": "test-062",
+                    "IsDir": true,
+                    "Children": [
+                        {
+                            "Name": "bv7.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "c30-15.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "c40-20.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "cp6.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "fq48-19.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "m6.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mit.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mit71-61.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "normaliz",
+                            "IsDir": true,
+                            "Children": [
+                                {
+                                    "Name": "bv7.in",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "c30-15.ext.in",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "c40-20.ext.in",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "cp6.in",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "fq48-19.in",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "m6.in",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "mit.in",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "mit71-61.in",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "perm10.in",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "zfw91.in",
+                                    "IsDir": true,
+                                    "Children": null
+                                }
+                            ]
+                        },
+                        {
+                            "Name": "perm10.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "porta",
+                            "IsDir": true,
+                            "Children": [
+                                {
+                                    "Name": "bv7.ine.ieq",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "c30-15.ext.poi",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "c40-20.ext.poi",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "cp6.ine.ieq",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "fq48-19.ine.ieq",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "m6.ine.ieq",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "mit.ine.ieq",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "mit71-61.ine.ieq",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "perm10.ine.ieq",
+                                    "IsDir": true,
+                                    "Children": null
+                                },
+                                {
+                                    "Name": "zfw91.ine.ieq",
+                                    "IsDir": true,
+                                    "Children": null
+                                }
+                            ]
+                        },
+                        {
+                            "Name": "zfw91.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "zfw91nn.ine",
+                            "IsDir": true,
+                            "Children": null
+                        }
+                    ]
+                },
+                {
+                    "Name": "test-072",
+                    "IsDir": true,
+                    "Children": [
+                        {
+                            "Name": "bv7.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "c30-15.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "c40-20.ext",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "fq48-19.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "m6.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mit.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "mit71-61.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "perm10.ine",
+                            "IsDir": true,
+                            "Children": null
+                        },
+                        {
+                            "Name": "zcp6.ine",
+                            "IsDir": true,
+                            "Children": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "Name": "tests",
+            "IsDir": true,
+            "Children": [
+                {
+                    "Name": "c.ext",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "c4.ext",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "c5.ext",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "cp4.ext",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "cp5.ext",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "cube.ext",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "cube.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "cube1.ext",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "cube1a.ext",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "cube2.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "cube2a.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "cube2b.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "cube3.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "cube4.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "cube4a.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "cube5.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "cube5a.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "cube6.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "cube7.ext",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "d.ext",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "dd.ext",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "epc.log",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "ex1.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "lcube.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "line.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "m4.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "m4n.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "m4nr.ext",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "m4nr.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "m5.ext",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "m5.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "m5e.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "m5f.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "m5n.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "mp5.ext",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "mp7.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "pyr.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "pyr1.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "tsp4.ext",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "tsp4.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "tsp4a.ext",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "tsp4a.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "tsp4b.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "w1-6.ext",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "w1-6.ine",
+                    "IsDir": true,
+                    "Children": null
+                },
+                {
+                    "Name": "w7.ine",
+                    "IsDir": true,
+                    "Children": null
+                }
+            ]
+        }
+    ]
 }

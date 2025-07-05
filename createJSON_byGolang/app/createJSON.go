@@ -11,7 +11,7 @@ import (
 
 type FileDirStruc struct {
 	Name string
-	IsDir string
+	IsDir bool
 	Children []*FileDirStruc
 }
 
@@ -59,20 +59,34 @@ func createJSONFile(strc FileDirStruc) {
 }
 
 
+func getRootIndex(pathList []string, root string) int {
+	var rootIndex int
+	for i, val := range pathList {
+		if val == root {
+			rootIndex = i
+			break
+		}
+	}
+	return rootIndex
+}
+
+
 func main() {
 	fmt.Println("Start:")
 	var targetPath string
 	fmt.Println("Please enter directory path:")
 	fmt.Scan(&targetPath)
-	// targetPath = "inputs"
+	// targetPath = "./inputs/ext"
+	// targetPath = "noExist"
+	fmt.Printf("targetPath: %v\n", targetPath)
 
 	soursePath := strings.Split(targetPath, "/")
 	root := soursePath[len(soursePath)-1]
 	 
-	fmt.Printf("root: %v\n", root)
+	// fmt.Printf("root: %v\n", root)
 	fmt.Println()
-	dirStruc := &FileDirStruc{Name: root, IsDir: "true"}
-	err := filepath.WalkDir(root, func (path string, info os.DirEntry, err error) error {
+	dirStruc := &FileDirStruc{Name: root, IsDir: true}
+	err := filepath.WalkDir(targetPath, func (path string, info os.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -83,24 +97,22 @@ func main() {
 
 		// fmt.Printf("nodeName: %v\n", info.Name())
 		var nodeList = strings.Split(path, "/")
+		rootIndex := getRootIndex(nodeList, root)
 		// fmt.Printf("NodeList: %v\n", nodeList)
 
-		var isDir string
-		if info.IsDir() {
-			isDir = "true"
-		} else {
-			isDir = "false"
-		}
-		newNode := &FileDirStruc{Name: info.Name(), IsDir: isDir}
+		newNode := &FileDirStruc{Name: info.Name(), IsDir: true}
 		fmt.Printf("newNode: %v\n", newNode)
-		SearchDirStruc(dirStruc, nodeList[:len(nodeList)-1], newNode)
+		SearchDirStruc(dirStruc, nodeList[rootIndex:len(nodeList)-1], newNode)
 
 		return nil
 	})
 
-	createJSONFile(*dirStruc)
+
 	if err != nil {
+		fmt.Println("Error:")
 		fmt.Println(err)
+	} else {
+		createJSONFile(*dirStruc)
 	}
 
 }

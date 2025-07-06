@@ -12,6 +12,7 @@ import (
 type FileDirStruc struct {
 	Name string
 	IsDir bool
+	Path string
 	Children []*FileDirStruc
 }
 
@@ -85,7 +86,7 @@ func main() {
 	 
 	// fmt.Printf("root: %v\n", root)
 	fmt.Println()
-	dirStruc := &FileDirStruc{Name: root, IsDir: true}
+	dirStruc := &FileDirStruc{Name: root, IsDir: true, Path: targetPath}
 	err := filepath.WalkDir(targetPath, func (path string, info os.DirEntry, err error) error {
 		if err != nil {
 			return err
@@ -100,8 +101,9 @@ func main() {
 		rootIndex := getRootIndex(nodeList, root)
 		// fmt.Printf("NodeList: %v\n", nodeList)
 
-		newNode := &FileDirStruc{Name: info.Name(), IsDir: true}
+		newNode := &FileDirStruc{Name: info.Name(), IsDir: true, Path: path}
 		fmt.Printf("newNode: %v\n", newNode)
+		fmt.Printf("path: %v\n", path)
 		SearchDirStruc(dirStruc, nodeList[rootIndex:len(nodeList)-1], newNode)
 
 		return nil

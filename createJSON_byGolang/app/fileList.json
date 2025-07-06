@@ -1,23 +1,28 @@
 {
     "Name": "inputs",
     "IsDir": true,
+    "Path": "inputs",
     "Children": [
         {
             "Name": "ext",
             "IsDir": true,
+            "Path": "inputs/ext",
             "Children": [
                 {
                     "Name": "ext1",
                     "IsDir": true,
+                    "Path": "inputs/ext/ext1",
                     "Children": [
                         {
                             "Name": "test.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/ext1/test.ext",
                             "Children": null
                         },
                         {
                             "Name": "test2.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/ext1/test2.ext",
                             "Children": null
                         }
                     ]
@@ -25,15 +30,18 @@
                 {
                     "Name": "ext2",
                     "IsDir": true,
+                    "Path": "inputs/ext/ext2",
                     "Children": [
                         {
                             "Name": "second.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/ext2/second.ext",
                             "Children": null
                         },
                         {
                             "Name": "second2.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/ext2/second2.ext",
                             "Children": null
                         }
                     ]
@@ -43,19 +51,23 @@
         {
             "Name": "ine",
             "IsDir": true,
+            "Path": "inputs/ine",
             "Children": [
                 {
                     "Name": "ine1",
                     "IsDir": true,
+                    "Path": "inputs/ine/ine1",
                     "Children": [
                         {
                             "Name": "first.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/ine1/first.ine",
                             "Children": null
                         },
                         {
                             "Name": "first2.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/ine1/first2.ine",
                             "Children": null
                         }
                     ]
@@ -63,15 +75,18 @@
                 {
                     "Name": "ine2",
                     "IsDir": true,
+                    "Path": "inputs/ine/ine2",
                     "Children": [
                         {
                             "Name": "second.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/ine2/second.ine",
                             "Children": null
                         },
                         {
                             "Name": "second2.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/ine2/second2.ine",
                             "Children": null
                         }
                     ]

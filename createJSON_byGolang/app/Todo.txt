@@ -1,0 +1,14 @@
+todo
+
+Useful funcs, methods, libraries in golang
+
+path/filepath   func Walk               Search dir
+path/filepath   func WalkDir            
+path/filepath   func Join               Join string to path
+os              func ReadDir
+os              func Stat               check file or dir
+os              func Create             create file
+encoding/json   func MarshallIndent
+encoding/json   func Marshall
+io              func Write
+log             func Fatal / Println

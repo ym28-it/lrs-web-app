@@ -1,7 +1,5 @@
 // lrs-common.js
-import { getFileListJSON } from "./dir-structure.js";
 import { renderFileSelector } from "./filelist-ui.js";
-import { setupInputSelector } from "./input-handler.js";
 
 let runProgram;
 
@@ -13,11 +11,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     const outputFileNameInput = document.getElementById('outputFileName');
     const runProgramButton = document.getElementById('runProgram');
     const selectElem = document.getElementById('server-file');
+    
 
-    // const filelist = await getFileListJSON();
-    // console.log('filelist', filelist);
-    // renderFileSelector(filelist, selectElem);
-    // setupInputSelector(selectElem, inputArea);
+    const fileList = await fetch('./fileList.json').then(res => res.json());
+
+    const openFileDialogButton = document.getElementById('server-file');
+    openFileDialogButton.textContent = 'Select File';
+    openFileDialogButton.addEventListener('click', () => {
+        // create modal container
+        const tempContainer = document.createElement('div');
+        tempContainer.style.maxHeight = '400px';
+        tempContainer.style.overflowY = 'auto';
+        renderFileSelector(fileList, tempContainer);
+
+        Swal.fire({
+            title: 'Select File',
+            html: tempContainer,
+            showCancelButton: true,
+            showConfirmButton: false
+        });
+    });
+    console.log('fileList', fileList);
 
 
     // mode-config.jsonの適用

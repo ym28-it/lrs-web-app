@@ -1,0 +1,14 @@
+services:
+  golang:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    container_name: golang-dev
+    volumes:
+      - ./app/:/practice
+    working_dir: /practice
+    stdin_open: true
+    tty: true
+
+    # 終了時
+    # docker compose down --rmi all --volumes --remove-orphans

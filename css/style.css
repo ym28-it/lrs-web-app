@@ -88,7 +88,7 @@ display: block;
 }
 
 /* ボタン */
-button {
+.nav-button, #runProgram, #downloadOutput {
 position: relative;
 padding: 10px 20px;
 font-size: 16px;
@@ -98,7 +98,7 @@ background-color: #007BFF;
 color: white;
 border-radius: 5px;
 }
-button:hover {
+.nav-button:hover, #runProgram:hover, #downloadOutput:hover {
 background-color: #0056b3;
 }
 

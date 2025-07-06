@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LRS test</title>
     <link rel="stylesheet" href="./css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 <body>
     <header class="header">
@@ -14,7 +16,6 @@
         <div>
             <a href="https://github.com/ym28-it/lrs-web-app.git" target="_blank" rel="noopener" title="View on GitHub">
                 <img src="./images/github-mark/github-mark.png" alt="GitHub">
-
             </a>
         </div>
     </header>
@@ -23,13 +24,11 @@
         <div>
             <label for="fileInput">Upload Own Input File:</label>
             <input type="file" id="fileInput">
-
-            <div>
-                <label for="server-file">Browse Sample Inputs:</label>
-                <select id="server-file">
-                    <option value="">-- select a file --</option>
-                </select>
-            </div>
+        </div>
+        <div>
+            <label for="server-file">Browse Sample Input File:</label>
+            <button id="server-file">Select file</button>
+            <span id="selected-file"></span>
         </div>
         
 

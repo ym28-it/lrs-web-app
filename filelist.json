@@ -1,58 +1,70 @@
 {
     "Name": "inputs",
     "IsDir": true,
+    "Path": "inputs",
     "Children": [
         {
             "Name": "ext",
             "IsDir": true,
+            "Path": "inputs/ext",
             "Children": [
                 {
                     "Name": "metric",
                     "IsDir": true,
+                    "Path": "inputs/ext/metric",
                     "Children": [
                         {
                             "Name": "c6.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/metric/c6.ext",
                             "Children": null
                         },
                         {
                             "Name": "c6.ine",
                             "IsDir": true,
+                            "Path": "inputs/ext/metric/c6.ine",
                             "Children": null
                         },
                         {
                             "Name": "c7.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/metric/c7.ext",
                             "Children": null
                         },
                         {
                             "Name": "c7.ine",
                             "IsDir": true,
+                            "Path": "inputs/ext/metric/c7.ine",
                             "Children": null
                         },
                         {
                             "Name": "cp4.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/metric/cp4.ext",
                             "Children": null
                         },
                         {
                             "Name": "cp5.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/metric/cp5.ext",
                             "Children": null
                         },
                         {
                             "Name": "cp6.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/metric/cp6.ext",
                             "Children": null
                         },
                         {
                             "Name": "cp6.ine",
                             "IsDir": true,
+                            "Path": "inputs/ext/metric/cp6.ine",
                             "Children": null
                         },
                         {
                             "Name": "cp7.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/metric/cp7.ext",
                             "Children": null
                         }
                     ]
@@ -60,100 +72,120 @@
                 {
                     "Name": "redund",
                     "IsDir": true,
+                    "Path": "inputs/ext/redund",
                     "Children": [
                         {
                             "Name": "cube.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/cube.ext",
                             "Children": null
                         },
                         {
                             "Name": "f1000_10.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/f1000_10.ext",
                             "Children": null
                         },
                         {
                             "Name": "f1000_10.extmin.ine.tail",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/f1000_10.extmin.ine.tail",
                             "Children": null
                         },
                         {
                             "Name": "r100_5.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/r100_5.ext",
                             "Children": null
                         },
                         {
                             "Name": "r100_5.extmin",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/r100_5.extmin",
                             "Children": null
                         },
                         {
                             "Name": "r100_5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/r100_5.ine",
                             "Children": null
                         },
                         {
                             "Name": "r100_5.ine.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/r100_5.ine.ext",
                             "Children": null
                         },
                         {
                             "Name": "r2000_5.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/r2000_5.ext",
                             "Children": null
                         },
                         {
                             "Name": "r2000_5.ext160",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/r2000_5.ext160",
                             "Children": null
                         },
                         {
                             "Name": "r2000_5.extredc",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/r2000_5.extredc",
                             "Children": null
                         },
                         {
                             "Name": "r20_5.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/r20_5.ext",
                             "Children": null
                         },
                         {
                             "Name": "r20k_5.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/r20k_5.ext",
                             "Children": null
                         },
                         {
                             "Name": "r4000_5.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/r4000_5.ext",
                             "Children": null
                         },
                         {
                             "Name": "r40_5.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/r40_5.ext",
                             "Children": null
                         },
                         {
                             "Name": "r500_5.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/r500_5.ext",
                             "Children": null
                         },
                         {
                             "Name": "r500_5.extmin",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/r500_5.extmin",
                             "Children": null
                         },
                         {
                             "Name": "r500_5.extredc",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/r500_5.extredc",
                             "Children": null
                         },
                         {
                             "Name": "r5k_100.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/r5k_100.ext",
                             "Children": null
                         },
                         {
                             "Name": "r5k_100.ext32",
                             "IsDir": true,
+                            "Path": "inputs/ext/redund/r5k_100.ext32",
                             "Children": null
                         }
                     ]
@@ -161,65 +193,78 @@
                 {
                     "Name": "test",
                     "IsDir": true,
+                    "Path": "inputs/ext/test",
                     "Children": [
                         {
                             "Name": "Mit.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/test/Mit.ext",
                             "Children": null
                         },
                         {
                             "Name": "c30-15.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/test/c30-15.ext",
                             "Children": null
                         },
                         {
                             "Name": "cube.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/test/cube.ext",
                             "Children": null
                         },
                         {
                             "Name": "cut16_11.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/test/cut16_11.ext",
                             "Children": null
                         },
                         {
                             "Name": "cut32_16.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/test/cut32_16.ext",
                             "Children": null
                         },
                         {
                             "Name": "cyclic25_13.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/test/cyclic25_13.ext",
                             "Children": null
                         },
                         {
                             "Name": "mit33.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/test/mit33.ext",
                             "Children": null
                         },
                         {
                             "Name": "mp5.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/test/mp5.ext",
                             "Children": null
                         },
                         {
                             "Name": "simp15.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/test/simp15.ext",
                             "Children": null
                         },
                         {
                             "Name": "tsp5.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/test/tsp5.ext",
                             "Children": null
                         },
                         {
                             "Name": "vol1.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/test/vol1.ext",
                             "Children": null
                         },
                         {
                             "Name": "vol2.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/test/vol2.ext",
                             "Children": null
                         }
                     ]
@@ -227,25 +272,30 @@
                 {
                     "Name": "tsp",
                     "IsDir": true,
+                    "Path": "inputs/ext/tsp",
                     "Children": [
                         {
                             "Name": "tsp4.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/tsp/tsp4.ext",
                             "Children": null
                         },
                         {
                             "Name": "tsp5.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/tsp/tsp5.ext",
                             "Children": null
                         },
                         {
                             "Name": "tsp6.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/tsp/tsp6.ext",
                             "Children": null
                         },
                         {
                             "Name": "tsp7.ext",
                             "IsDir": true,
+                            "Path": "inputs/ext/tsp/tsp7.ext",
                             "Children": null
                         }
                     ]
@@ -255,74 +305,89 @@
         {
             "Name": "ine",
             "IsDir": true,
+            "Path": "inputs/ine",
             "Children": [
                 {
                     "Name": "afsa",
                     "IsDir": true,
+                    "Path": "inputs/ine/afsa",
                     "Children": [
                         {
                             "Name": "cp6.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/afsa/cp6.ine",
                             "Children": null
                         },
                         {
                             "Name": "ctype.ext",
                             "IsDir": true,
+                            "Path": "inputs/ine/afsa/ctype.ext",
                             "Children": null
                         },
                         {
                             "Name": "ducube.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/afsa/ducube.ine",
                             "Children": null
                         },
                         {
                             "Name": "ducube2.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/afsa/ducube2.ine",
                             "Children": null
                         },
                         {
                             "Name": "hec.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/afsa/hec.ine",
                             "Children": null
                         },
                         {
                             "Name": "lambda.ext",
                             "IsDir": true,
+                            "Path": "inputs/ine/afsa/lambda.ext",
                             "Children": null
                         },
                         {
                             "Name": "lambda2.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/afsa/lambda2.ine",
                             "Children": null
                         },
                         {
                             "Name": "r500.ext",
                             "IsDir": true,
+                            "Path": "inputs/ine/afsa/r500.ext",
                             "Children": null
                         },
                         {
                             "Name": "sphere.ext",
                             "IsDir": true,
+                            "Path": "inputs/ine/afsa/sphere.ext",
                             "Children": null
                         },
                         {
                             "Name": "sphere2.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/afsa/sphere2.ine",
                             "Children": null
                         },
                         {
                             "Name": "tsp7.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/afsa/tsp7.ine",
                             "Children": null
                         },
                         {
                             "Name": "ucube.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/afsa/ucube.ine",
                             "Children": null
                         },
                         {
                             "Name": "ucube2.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/afsa/ucube2.ine",
                             "Children": null
                         }
                     ]
@@ -330,40 +395,48 @@
                 {
                     "Name": "metric",
                     "IsDir": true,
+                    "Path": "inputs/ine/metric",
                     "Children": [
                         {
                             "Name": "cert1.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/metric/cert1.ine",
                             "Children": null
                         },
                         {
                             "Name": "cert2.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/metric/cert2.ine",
                             "Children": null
                         },
                         {
                             "Name": "cp4.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/metric/cp4.ine",
                             "Children": null
                         },
                         {
                             "Name": "cp5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/metric/cp5.ine",
                             "Children": null
                         },
                         {
                             "Name": "cp6.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/metric/cp6.ine",
                             "Children": null
                         },
                         {
                             "Name": "mp5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/metric/mp5.ine",
                             "Children": null
                         },
                         {
                             "Name": "mp6.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/metric/mp6.ine",
                             "Children": null
                         }
                     ]
@@ -371,40 +444,48 @@
                 {
                     "Name": "mit",
                     "IsDir": true,
+                    "Path": "inputs/ine/mit",
                     "Children": [
                         {
                             "Name": "mit.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/mit/mit.ine",
                             "Children": null
                         },
                         {
                             "Name": "mit288-281.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/mit/mit288-281.ine",
                             "Children": null
                         },
                         {
                             "Name": "mit31-20.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/mit/mit31-20.ine",
                             "Children": null
                         },
                         {
                             "Name": "mit41-16.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/mit/mit41-16.ine",
                             "Children": null
                         },
                         {
                             "Name": "mit708-9.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/mit/mit708-9.ine",
                             "Children": null
                         },
                         {
                             "Name": "mit71-61.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/mit/mit71-61.ine",
                             "Children": null
                         },
                         {
                             "Name": "mit90-86.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/mit/mit90-86.ine",
                             "Children": null
                         }
                     ]
@@ -412,30 +493,36 @@
                 {
                     "Name": "polybase",
                     "IsDir": true,
+                    "Path": "inputs/ine/polybase",
                     "Children": [
                         {
                             "Name": "PolyBase.pdf",
                             "IsDir": true,
+                            "Path": "inputs/ine/polybase/PolyBase.pdf",
                             "Children": null
                         },
                         {
                             "Name": "README.txt",
                             "IsDir": true,
+                            "Path": "inputs/ine/polybase/README.txt",
                             "Children": null
                         },
                         {
                             "Name": "dwarfcube.pl",
                             "IsDir": true,
+                            "Path": "inputs/ine/polybase/dwarfcube.pl",
                             "Children": null
                         },
                         {
                             "Name": "metric.pl",
                             "IsDir": true,
+                            "Path": "inputs/ine/polybase/metric.pl",
                             "Children": null
                         },
                         {
                             "Name": "randsphere.c",
                             "IsDir": true,
+                            "Path": "inputs/ine/polybase/randsphere.c",
                             "Children": null
                         }
                     ]
@@ -443,49 +530,59 @@
                 {
                     "Name": "project",
                     "IsDir": true,
+                    "Path": "inputs/ine/project",
                     "Children": [
                         {
                             "Name": "cube.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/cube.ine",
                             "Children": null
                         },
                         {
                             "Name": "hec",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/hec",
                             "Children": [
                                 {
                                     "Name": "README",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/project/hec/README",
                                     "Children": null
                                 },
                                 {
                                     "Name": "h3.ext",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/project/hec/h3.ext",
                                     "Children": null
                                 },
                                 {
                                     "Name": "h3.ine",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/project/hec/h3.ine",
                                     "Children": null
                                 },
                                 {
                                     "Name": "h4.ext",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/project/hec/h4.ext",
                                     "Children": null
                                 },
                                 {
                                     "Name": "h4.ine",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/project/hec/h4.ine",
                                     "Children": null
                                 },
                                 {
                                     "Name": "h5.ext",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/project/hec/h5.ext",
                                     "Children": null
                                 },
                                 {
                                     "Name": "h5.ine",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/project/hec/h5.ine",
                                     "Children": null
                                 }
                             ]
@@ -493,30 +590,36 @@
                         {
                             "Name": "ieq",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/ieq",
                             "Children": [
                                 {
                                     "Name": "ine2ieq",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/project/ieq/ine2ieq",
                                     "Children": null
                                 },
                                 {
                                     "Name": "rc100-4.ieq",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/project/ieq/rc100-4.ieq",
                                     "Children": null
                                 },
                                 {
                                     "Name": "rc100-5.ieq",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/project/ieq/rc100-5.ieq",
                                     "Children": null
                                 },
                                 {
                                     "Name": "rc20-5.ieq",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/project/ieq/rc20-5.ieq",
                                     "Children": null
                                 },
                                 {
                                     "Name": "rc250-5.ieq",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/project/ieq/rc250-5.ieq",
                                     "Children": null
                                 }
                             ]
@@ -524,116 +627,139 @@
                         {
                             "Name": "metric80_16.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/metric80_16.ine",
                             "Children": null
                         },
                         {
                             "Name": "mit.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/mit.ine",
                             "Children": null
                         },
                         {
                             "Name": "mp5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/mp5.ine",
                             "Children": null
                         },
                         {
                             "Name": "mp5a.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/mp5a.ine",
                             "Children": null
                         },
                         {
                             "Name": "mp5b.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/mp5b.ine",
                             "Children": null
                         },
                         {
                             "Name": "mp5c.ext",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/mp5c.ext",
                             "Children": null
                         },
                         {
                             "Name": "mp5c.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/mp5c.ine",
                             "Children": null
                         },
                         {
                             "Name": "rc100-4.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/rc100-4.ine",
                             "Children": null
                         },
                         {
                             "Name": "rc100-5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/rc100-5.ine",
                             "Children": null
                         },
                         {
                             "Name": "rc1000-5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/rc1000-5.ine",
                             "Children": null
                         },
                         {
                             "Name": "rc20-5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/rc20-5.ine",
                             "Children": null
                         },
                         {
                             "Name": "rc2000-5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/rc2000-5.ine",
                             "Children": null
                         },
                         {
                             "Name": "rc250-5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/rc250-5.ine",
                             "Children": null
                         },
                         {
                             "Name": "rc272-5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/rc272-5.ine",
                             "Children": null
                         },
                         {
                             "Name": "rc4000-5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/rc4000-5.ine",
                             "Children": null
                         },
                         {
                             "Name": "rc500-5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/rc500-5.ine",
                             "Children": null
                         },
                         {
                             "Name": "tsp4.ext",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/tsp4.ext",
                             "Children": null
                         },
                         {
                             "Name": "tsp4.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/tsp4.ine",
                             "Children": null
                         },
                         {
                             "Name": "tsp5.ext",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/tsp5.ext",
                             "Children": null
                         },
                         {
                             "Name": "tsp5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/tsp5.ine",
                             "Children": null
                         },
                         {
                             "Name": "tsp6.ext",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/tsp6.ext",
                             "Children": null
                         },
                         {
                             "Name": "tsp6.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/tsp6.ine",
                             "Children": null
                         },
                         {
                             "Name": "tsp7.ext",
                             "IsDir": true,
+                            "Path": "inputs/ine/project/tsp7.ext",
                             "Children": null
                         }
                     ]
@@ -641,59 +767,71 @@
                 {
                     "Name": "redund",
                     "IsDir": true,
+                    "Path": "inputs/ine/redund",
                     "Children": [
                         {
                             "Name": "c4.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/redund/c4.ine",
                             "Children": null
                         },
                         {
                             "Name": "c4a.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/redund/c4a.ine",
                             "Children": null
                         },
                         {
                             "Name": "cube.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/redund/cube.ine",
                             "Children": null
                         },
                         {
                             "Name": "hidden",
                             "IsDir": true,
+                            "Path": "inputs/ine/redund/hidden",
                             "Children": [
                                 {
                                     "Name": "c1.ine",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/redund/hidden/c1.ine",
                                     "Children": null
                                 },
                                 {
                                     "Name": "c2.ine",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/redund/hidden/c2.ine",
                                     "Children": null
                                 },
                                 {
                                     "Name": "c2a.ine",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/redund/hidden/c2a.ine",
                                     "Children": null
                                 },
                                 {
                                     "Name": "cp4.ine",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/redund/hidden/cp4.ine",
                                     "Children": null
                                 },
                                 {
                                     "Name": "metric80_16.ine",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/redund/hidden/metric80_16.ine",
                                     "Children": null
                                 },
                                 {
                                     "Name": "rcube.ine",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/redund/hidden/rcube.ine",
                                     "Children": null
                                 },
                                 {
                                     "Name": "s0.ine",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/redund/hidden/s0.ine",
                                     "Children": null
                                 }
                             ]
@@ -701,66 +839,79 @@
                         {
                             "Name": "metric80_16.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/redund/metric80_16.ine",
                             "Children": null
                         },
                         {
                             "Name": "mit.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/redund/mit.ine",
                             "Children": null
                         },
                         {
                             "Name": "mp5a.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/redund/mp5a.ine",
                             "Children": null
                         },
                         {
                             "Name": "mp5b.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/redund/mp5b.ine",
                             "Children": null
                         },
                         {
                             "Name": "mp5c.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/redund/mp5c.ine",
                             "Children": null
                         },
                         {
                             "Name": "r100_5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/redund/r100_5.ine",
                             "Children": null
                         },
                         {
                             "Name": "r2000_5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/redund/r2000_5.ine",
                             "Children": null
                         },
                         {
                             "Name": "r2000_5.redund",
                             "IsDir": true,
+                            "Path": "inputs/ine/redund/r2000_5.redund",
                             "Children": null
                         },
                         {
                             "Name": "r2000_5.redundc",
                             "IsDir": true,
+                            "Path": "inputs/ine/redund/r2000_5.redundc",
                             "Children": null
                         },
                         {
                             "Name": "r20_5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/redund/r20_5.ine",
                             "Children": null
                         },
                         {
                             "Name": "r35_5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/redund/r35_5.ine",
                             "Children": null
                         },
                         {
                             "Name": "r4000_5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/redund/r4000_5.ine",
                             "Children": null
                         },
                         {
                             "Name": "r500_5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/redund/r500_5.ine",
                             "Children": null
                         }
                     ]
@@ -768,155 +919,186 @@
                 {
                     "Name": "test",
                     "IsDir": true,
+                    "Path": "inputs/ine/test",
                     "Children": [
                         {
                             "Name": "cp4.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/cp4.ine",
                             "Children": null
                         },
                         {
                             "Name": "cross4.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/cross4.ine",
                             "Children": null
                         },
                         {
                             "Name": "cube.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/cube.ine",
                             "Children": null
                         },
                         {
                             "Name": "cyclic17_8.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/cyclic17_8.ine",
                             "Children": null
                         },
                         {
                             "Name": "diamond.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/diamond.ine",
                             "Children": null
                         },
                         {
                             "Name": "ep.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/ep.ine",
                             "Children": null
                         },
                         {
                             "Name": "in0.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/in0.ine",
                             "Children": null
                         },
                         {
                             "Name": "in1.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/in1.ine",
                             "Children": null
                         },
                         {
                             "Name": "in2.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/in2.ine",
                             "Children": null
                         },
                         {
                             "Name": "in3.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/in3.ine",
                             "Children": null
                         },
                         {
                             "Name": "in4.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/in4.ine",
                             "Children": null
                         },
                         {
                             "Name": "in5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/in5.ine",
                             "Children": null
                         },
                         {
                             "Name": "in6.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/in6.ine",
                             "Children": null
                         },
                         {
                             "Name": "in7.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/in7.ine",
                             "Children": null
                         },
                         {
                             "Name": "inf.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/inf.ine",
                             "Children": null
                         },
                         {
                             "Name": "kkd38_6.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/kkd38_6.ine",
                             "Children": null
                         },
                         {
                             "Name": "kq20_11.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/kq20_11.ine",
                             "Children": null
                         },
                         {
                             "Name": "kq20_11a.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/kq20_11a.ine",
                             "Children": null
                         },
                         {
                             "Name": "lcube.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/lcube.ine",
                             "Children": null
                         },
                         {
                             "Name": "left.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/left.ine",
                             "Children": null
                         },
                         {
                             "Name": "metric40_11.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/metric40_11.ine",
                             "Children": null
                         },
                         {
                             "Name": "metric80_16.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/metric80_16.ine",
                             "Children": null
                         },
                         {
                             "Name": "mit.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/mit.ine",
                             "Children": null
                         },
                         {
                             "Name": "mit31_20.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/mit31_20.ine",
                             "Children": null
                         },
                         {
                             "Name": "mp5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/mp5.ine",
                             "Children": null
                         },
                         {
                             "Name": "right.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/right.ine",
                             "Children": null
                         },
                         {
                             "Name": "trunc10.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/trunc10.ine",
                             "Children": null
                         },
                         {
                             "Name": "trunc7.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/trunc7.ine",
                             "Children": null
                         },
                         {
                             "Name": "truss2.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/truss2.ine",
                             "Children": null
                         },
                         {
                             "Name": "tsp5.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test/tsp5.ine",
                             "Children": null
                         }
                     ]
@@ -924,99 +1106,119 @@
                 {
                     "Name": "test-062",
                     "IsDir": true,
+                    "Path": "inputs/ine/test-062",
                     "Children": [
                         {
                             "Name": "bv7.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-062/bv7.ine",
                             "Children": null
                         },
                         {
                             "Name": "c30-15.ext",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-062/c30-15.ext",
                             "Children": null
                         },
                         {
                             "Name": "c40-20.ext",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-062/c40-20.ext",
                             "Children": null
                         },
                         {
                             "Name": "cp6.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-062/cp6.ine",
                             "Children": null
                         },
                         {
                             "Name": "fq48-19.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-062/fq48-19.ine",
                             "Children": null
                         },
                         {
                             "Name": "m6.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-062/m6.ine",
                             "Children": null
                         },
                         {
                             "Name": "mit.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-062/mit.ine",
                             "Children": null
                         },
                         {
                             "Name": "mit71-61.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-062/mit71-61.ine",
                             "Children": null
                         },
                         {
                             "Name": "normaliz",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-062/normaliz",
                             "Children": [
                                 {
                                     "Name": "bv7.in",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/normaliz/bv7.in",
                                     "Children": null
                                 },
                                 {
                                     "Name": "c30-15.ext.in",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/normaliz/c30-15.ext.in",
                                     "Children": null
                                 },
                                 {
                                     "Name": "c40-20.ext.in",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/normaliz/c40-20.ext.in",
                                     "Children": null
                                 },
                                 {
                                     "Name": "cp6.in",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/normaliz/cp6.in",
                                     "Children": null
                                 },
                                 {
                                     "Name": "fq48-19.in",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/normaliz/fq48-19.in",
                                     "Children": null
                                 },
                                 {
                                     "Name": "m6.in",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/normaliz/m6.in",
                                     "Children": null
                                 },
                                 {
                                     "Name": "mit.in",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/normaliz/mit.in",
                                     "Children": null
                                 },
                                 {
                                     "Name": "mit71-61.in",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/normaliz/mit71-61.in",
                                     "Children": null
                                 },
                                 {
                                     "Name": "perm10.in",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/normaliz/perm10.in",
                                     "Children": null
                                 },
                                 {
                                     "Name": "zfw91.in",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/normaliz/zfw91.in",
                                     "Children": null
                                 }
                             ]
@@ -1024,60 +1226,72 @@
                         {
                             "Name": "perm10.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-062/perm10.ine",
                             "Children": null
                         },
                         {
                             "Name": "porta",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-062/porta",
                             "Children": [
                                 {
                                     "Name": "bv7.ine.ieq",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/porta/bv7.ine.ieq",
                                     "Children": null
                                 },
                                 {
                                     "Name": "c30-15.ext.poi",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/porta/c30-15.ext.poi",
                                     "Children": null
                                 },
                                 {
                                     "Name": "c40-20.ext.poi",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/porta/c40-20.ext.poi",
                                     "Children": null
                                 },
                                 {
                                     "Name": "cp6.ine.ieq",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/porta/cp6.ine.ieq",
                                     "Children": null
                                 },
                                 {
                                     "Name": "fq48-19.ine.ieq",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/porta/fq48-19.ine.ieq",
                                     "Children": null
                                 },
                                 {
                                     "Name": "m6.ine.ieq",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/porta/m6.ine.ieq",
                                     "Children": null
                                 },
                                 {
                                     "Name": "mit.ine.ieq",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/porta/mit.ine.ieq",
                                     "Children": null
                                 },
                                 {
                                     "Name": "mit71-61.ine.ieq",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/porta/mit71-61.ine.ieq",
                                     "Children": null
                                 },
                                 {
                                     "Name": "perm10.ine.ieq",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/porta/perm10.ine.ieq",
                                     "Children": null
                                 },
                                 {
                                     "Name": "zfw91.ine.ieq",
                                     "IsDir": true,
+                                    "Path": "inputs/ine/test-062/porta/zfw91.ine.ieq",
                                     "Children": null
                                 }
                             ]
@@ -1085,11 +1299,13 @@
                         {
                             "Name": "zfw91.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-062/zfw91.ine",
                             "Children": null
                         },
                         {
                             "Name": "zfw91nn.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-062/zfw91nn.ine",
                             "Children": null
                         }
                     ]
@@ -1097,50 +1313,60 @@
                 {
                     "Name": "test-072",
                     "IsDir": true,
+                    "Path": "inputs/ine/test-072",
                     "Children": [
                         {
                             "Name": "bv7.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-072/bv7.ine",
                             "Children": null
                         },
                         {
                             "Name": "c30-15.ext",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-072/c30-15.ext",
                             "Children": null
                         },
                         {
                             "Name": "c40-20.ext",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-072/c40-20.ext",
                             "Children": null
                         },
                         {
                             "Name": "fq48-19.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-072/fq48-19.ine",
                             "Children": null
                         },
                         {
                             "Name": "m6.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-072/m6.ine",
                             "Children": null
                         },
                         {
                             "Name": "mit.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-072/mit.ine",
                             "Children": null
                         },
                         {
                             "Name": "mit71-61.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-072/mit71-61.ine",
                             "Children": null
                         },
                         {
                             "Name": "perm10.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-072/perm10.ine",
                             "Children": null
                         },
                         {
                             "Name": "zcp6.ine",
                             "IsDir": true,
+                            "Path": "inputs/ine/test-072/zcp6.ine",
                             "Children": null
                         }
                     ]
@@ -1150,235 +1376,282 @@
         {
             "Name": "tests",
             "IsDir": true,
+            "Path": "inputs/tests",
             "Children": [
                 {
                     "Name": "c.ext",
                     "IsDir": true,
+                    "Path": "inputs/tests/c.ext",
                     "Children": null
                 },
                 {
                     "Name": "c4.ext",
                     "IsDir": true,
+                    "Path": "inputs/tests/c4.ext",
                     "Children": null
                 },
                 {
                     "Name": "c5.ext",
                     "IsDir": true,
+                    "Path": "inputs/tests/c5.ext",
                     "Children": null
                 },
                 {
                     "Name": "cp4.ext",
                     "IsDir": true,
+                    "Path": "inputs/tests/cp4.ext",
                     "Children": null
                 },
                 {
                     "Name": "cp5.ext",
                     "IsDir": true,
+                    "Path": "inputs/tests/cp5.ext",
                     "Children": null
                 },
                 {
                     "Name": "cube.ext",
                     "IsDir": true,
+                    "Path": "inputs/tests/cube.ext",
                     "Children": null
                 },
                 {
                     "Name": "cube.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/cube.ine",
                     "Children": null
                 },
                 {
                     "Name": "cube1.ext",
                     "IsDir": true,
+                    "Path": "inputs/tests/cube1.ext",
                     "Children": null
                 },
                 {
                     "Name": "cube1a.ext",
                     "IsDir": true,
+                    "Path": "inputs/tests/cube1a.ext",
                     "Children": null
                 },
                 {
                     "Name": "cube2.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/cube2.ine",
                     "Children": null
                 },
                 {
                     "Name": "cube2a.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/cube2a.ine",
                     "Children": null
                 },
                 {
                     "Name": "cube2b.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/cube2b.ine",
                     "Children": null
                 },
                 {
                     "Name": "cube3.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/cube3.ine",
                     "Children": null
                 },
                 {
                     "Name": "cube4.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/cube4.ine",
                     "Children": null
                 },
                 {
                     "Name": "cube4a.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/cube4a.ine",
                     "Children": null
                 },
                 {
                     "Name": "cube5.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/cube5.ine",
                     "Children": null
                 },
                 {
                     "Name": "cube5a.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/cube5a.ine",
                     "Children": null
                 },
                 {
                     "Name": "cube6.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/cube6.ine",
                     "Children": null
                 },
                 {
                     "Name": "cube7.ext",
                     "IsDir": true,
+                    "Path": "inputs/tests/cube7.ext",
                     "Children": null
                 },
                 {
                     "Name": "d.ext",
                     "IsDir": true,
+                    "Path": "inputs/tests/d.ext",
                     "Children": null
                 },
                 {
                     "Name": "dd.ext",
                     "IsDir": true,
+                    "Path": "inputs/tests/dd.ext",
                     "Children": null
                 },
                 {
                     "Name": "epc.log",
                     "IsDir": true,
+                    "Path": "inputs/tests/epc.log",
                     "Children": null
                 },
                 {
                     "Name": "ex1.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/ex1.ine",
                     "Children": null
                 },
                 {
                     "Name": "lcube.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/lcube.ine",
                     "Children": null
                 },
                 {
                     "Name": "line.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/line.ine",
                     "Children": null
                 },
                 {
                     "Name": "m4.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/m4.ine",
                     "Children": null
                 },
                 {
                     "Name": "m4n.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/m4n.ine",
                     "Children": null
                 },
                 {
                     "Name": "m4nr.ext",
                     "IsDir": true,
+                    "Path": "inputs/tests/m4nr.ext",
                     "Children": null
                 },
                 {
                     "Name": "m4nr.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/m4nr.ine",
                     "Children": null
                 },
                 {
                     "Name": "m5.ext",
                     "IsDir": true,
+                    "Path": "inputs/tests/m5.ext",
                     "Children": null
                 },
                 {
                     "Name": "m5.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/m5.ine",
                     "Children": null
                 },
                 {
                     "Name": "m5e.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/m5e.ine",
                     "Children": null
                 },
                 {
                     "Name": "m5f.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/m5f.ine",
                     "Children": null
                 },
                 {
                     "Name": "m5n.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/m5n.ine",
                     "Children": null
                 },
                 {
                     "Name": "mp5.ext",
                     "IsDir": true,
+                    "Path": "inputs/tests/mp5.ext",
                     "Children": null
                 },
                 {
                     "Name": "mp7.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/mp7.ine",
                     "Children": null
                 },
                 {
                     "Name": "pyr.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/pyr.ine",
                     "Children": null
                 },
                 {
                     "Name": "pyr1.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/pyr1.ine",
                     "Children": null
                 },
                 {
                     "Name": "tsp4.ext",
                     "IsDir": true,
+                    "Path": "inputs/tests/tsp4.ext",
                     "Children": null
                 },
                 {
                     "Name": "tsp4.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/tsp4.ine",
                     "Children": null
                 },
                 {
                     "Name": "tsp4a.ext",
                     "IsDir": true,
+                    "Path": "inputs/tests/tsp4a.ext",
                     "Children": null
                 },
                 {
                     "Name": "tsp4a.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/tsp4a.ine",
                     "Children": null
                 },
                 {
                     "Name": "tsp4b.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/tsp4b.ine",
                     "Children": null
                 },
                 {
                     "Name": "w1-6.ext",
                     "IsDir": true,
+                    "Path": "inputs/tests/w1-6.ext",
                     "Children": null
                 },
                 {
                     "Name": "w1-6.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/w1-6.ine",
                     "Children": null
                 },
                 {
                     "Name": "w7.ine",
                     "IsDir": true,
+                    "Path": "inputs/tests/w7.ine",
                     "Children": null
                 }
             ]

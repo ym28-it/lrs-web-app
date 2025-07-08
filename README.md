@@ -236,6 +236,7 @@ You can also do it by pressing Ctrl+Enter (Cmd+Enter).
 
    ```bash
    tar -xvzf lrslib-073.tar.gz
+   cd lrslib-073
    ```
 
 5. Install GMP
@@ -304,6 +305,8 @@ there are four exe files in createJSON_byGolang/app/exeFiles
 - createJSON.exe
 
    For Windows
+
+  `GOOS=windows GOARCH=amd64 go build -o createJSON.exe createJSON.go`
 
 - createJSON_linux
 

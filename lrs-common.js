@@ -1,7 +1,5 @@
 // lrs-common.js
-// import { getFileListJSON } from "./dir-structure.js";
 import { renderFileSelector } from "./filelist-ui.js";
-// import { setupInputSelector } from "./input-handler.js";
 
 let runProgram;
 

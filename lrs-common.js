@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const elapsedTime = document.getElementById('elapsedTime');
     const outputFileNameInput = document.getElementById('outputFileName');
     const runProgramButton = document.getElementById('runProgram');
-    const selectElem = document.getElementById('server-file');
+    const selectElem = document.getElementById('selected-file-name');
     
 
     const fileList = await fetch('./fileList.json').then(res => res.json());
@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             reader.readAsText(file);
             const baseName = file.name;  // 拡張子除去
             outputFileNameInput.placeholder = `${baseName}.out`;
+            selectElem.textContent = 'Not Selected';
             }
         });
     }

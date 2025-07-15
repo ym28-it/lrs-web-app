@@ -69,10 +69,13 @@ function addMenu(parent, items) {
                 e.stopPropagation();
                 console.log("Selected file:", item.Name);
                 const inputArea = document.getElementById('inputArea');
-                const fileName = document.getElementById('selected-file');
+                const fileName = document.getElementById('selected-file-name');
                 fileName.textContent = item.Name;
                 const outputArea = document.getElementById('outputArea');
                 outputArea.value = '';
+
+                const uploadFile = document.getElementById('fileInput');
+                uploadFile.value = '';
 
                 fetch(item.Path)
                     .then(res => res.text())

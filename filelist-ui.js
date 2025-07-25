@@ -77,6 +77,9 @@ function addMenu(parent, items) {
                 const uploadFile = document.getElementById('fileInput');
                 uploadFile.value = '';
 
+                const outputFileNameInput = document.getElementById('outputFileName');
+                outputFileNameInput.placeholder = `${item.Name}.out`;
+
                 fetch(item.Path)
                     .then(res => res.text())
                     .then(data => {

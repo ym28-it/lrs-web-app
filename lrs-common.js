@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if(downloadBtn){
         downloadBtn.addEventListener('click', () => {
             const outputText = outputArea.value;
-            const outputFileName = outputFileNameInput.value.trim() || 'output.txt';
+            const outputFileName = outputFileNameInput.value.trim() || outputFileNameInput.placeholder;
             const blob = new Blob([outputText], { type: 'text/plain' });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);

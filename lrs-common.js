@@ -180,7 +180,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 console.log('hide Loading');
                 const {H, V} = getVHData();
                 console.log('H:\n', H);
+                console.log('how many lines in H?', H.length);
+
                 console.log('V:\n', V);
+                console.log('how many lines in V?', V.length);
 
                 currentWorker.terminate(); // Workerの終了（リソース解放）
 

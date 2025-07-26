@@ -1,5 +1,7 @@
 // lrs-common.js
 import { renderFileSelector } from "./filelist-ui.js";
+import { getVHData } from "./visualize.js";
+
 
 let runProgram;
 
@@ -167,7 +169,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 clearInterval(timeInProcess); // タイマーをクリア
                 // elapsedTimeを更新
                 console.log('update elapsedTime');
-                elapsedTime.textContent = `${(e.data.elapsedTime / 1000).toFixed(2)} s`;
+                // elapsedTime.textContent = `${(e.data.elapsedTime / 1000).toFixed(2)} s`;
 
             } else if (e.data.result) {
                 console.log('get output data');
@@ -176,6 +178,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 outputArea.value += `\n*** Based on lrs ${version} ***\n`;
                 hideLoading(); // 結果受信後にローディング非表示
                 console.log('hide Loading');
+                const {H, V} = getVHData();
+                console.log('H:\n', H);
+                console.log('V:\n', V);
+
                 currentWorker.terminate(); // Workerの終了（リソース解放）
 
             }

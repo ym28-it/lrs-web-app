@@ -1,6 +1,7 @@
 // lrs-common.js
 import { renderFileSelector } from "./filelist-ui.js";
 import { getVHData } from "./visualize.js";
+import { addIncidenceInInput } from "./addIncidenceInInput.js";
 
 
 let runProgram;
@@ -135,6 +136,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log('start processing');
 
 
+        const visualization = document.getElementById('visualization');
+        let hasAddedIncidence = false;
+        if (visualization.checked) {
+            console.log("visualization");
+            hasAddedIncidence = addIncidenceInInput(); // incidenceを追加
+            console.log('hasAddedIncidence', hasAddedIncidence);
+            console.log('inputs: \n', inputArea.value);
+        }
         const inputText = inputArea.value;
 
         const moduleParam = encodeURIComponent(modeConfig.wasmModule);
@@ -172,18 +181,21 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // elapsedTime.textContent = `${(e.data.elapsedTime / 1000).toFixed(2)} s`;
 
             } else if (e.data.result) {
+                // visualization
+                const {H, V, incidence} = getVHData(hasAddedIncidence);
+                console.log('H:\n', H);
+
+                console.log('V:\n', V);
+
+                console.log('incidence:\n', incidence);
+
+                // output
                 console.log('get output data');
 
                 outputArea.value = e.data.result;
                 outputArea.value += `\n*** Based on lrs ${version} ***\n`;
                 hideLoading(); // 結果受信後にローディング非表示
                 console.log('hide Loading');
-                const {H, V} = getVHData();
-                console.log('H:\n', H);
-                console.log('how many lines in H?', H.length);
-
-                console.log('V:\n', V);
-                console.log('how many lines in V?', V.length);
 
                 currentWorker.terminate(); // Workerの終了（リソース解放）
 

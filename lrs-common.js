@@ -1,7 +1,7 @@
 // lrs-common.js
 import { renderFileSelector } from "./filelist-ui.js";
 import { getVHData } from "./visualize.js";
-import { addIncidenceInInput } from "./addIncidenceInInput.js";
+import { addIncidenceInInput, parseCorrectOutput } from "./incidenceControl.js";
 
 
 let runProgram;
@@ -144,7 +144,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log('hasAddedIncidence', hasAddedIncidence);
             console.log('inputs: \n', inputArea.value);
         }
-        const inputText = inputArea.value;
+        
+        let inputText;
+        if (hasAddedIncidence) {
+            inputText = inputArea.value + '\nincidence\n';
+        } else {
+            inputText = inputArea.value;
+        }
 
         const moduleParam = encodeURIComponent(modeConfig.wasmModule);
 
@@ -181,8 +187,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // elapsedTime.textContent = `${(e.data.elapsedTime / 1000).toFixed(2)} s`;
 
             } else if (e.data.result) {
+                let output = e.data.result;
+                
                 // visualization
-                const {H, V, incidence} = getVHData(hasAddedIncidence);
+                let {resultH: H, resultV: V, incidence} = getVHData(output);
                 console.log('H:\n', H);
 
                 console.log('V:\n', V);
@@ -192,7 +200,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // output
                 console.log('get output data');
 
-                outputArea.value = e.data.result;
+                if (hasAddedIncidence) {
+                    outputArea.value = parseCorrectOutput(output, V, H);
+                } else {
+                    outputArea.value = output;
+                }
+                
                 outputArea.value += `\n*** Based on lrs ${version} ***\n`;
                 hideLoading(); // 結果受信後にローディング非表示
                 console.log('hide Loading');

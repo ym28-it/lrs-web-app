@@ -1,4 +1,4 @@
-
+import * as THREE from 'three';
 
 export function getVHData(output) {
     const inputArea = document.getElementById('inputArea');
@@ -18,6 +18,9 @@ export function getVHData(output) {
         H = parsedInput.result;
         V = parsedOutput.result;
         incidence = parsedOutput.incidence;
+
+        // const facetsData = parseHtoVIncidence(H, V, incidence);
+
     } else if (input.includes("V-representation")) {
         VtoH = true;
         let parsedInput = parseData(input, HtoV, VtoH);
@@ -25,10 +28,15 @@ export function getVHData(output) {
         V = parsedInput.result;
         H = parsedOutput.result;
         incidence = parsedOutput.incidence;
+
+        // const facetsData = parseVtoHIncidence(H, V, incidence);
+
     } else {
         console.error("Invalid input/output format in visualize.js");
         return false;
     }
+
+    executeVisualization();
 
     // console.log('H:\n', H);
     // console.log('V:\n', V);
@@ -117,6 +125,8 @@ function parseHtoVIncidence(H, V, incidence) {
     // H: inequalities
     // V: summits
     
+    // 1: lines in incidence is pairs of inequalities
+    // 2: necessary  inequalities list  elems is 
     for (let i; i < incidence.length; i++) {
         const line = incidence[i];
 
@@ -131,6 +141,65 @@ function parseVtoHIncidence(H, V, incidence) {
 }
 
 
+function whetherWebGLSupported() {
+
+}
+
+
 function executeVisualization() {
+    const renderer = new THREE.WebGLRenderer({
+        canvas: document.querySelector("#myCanvas")
+    });
+
+    const width = 960;
+    const height = 540;
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(window.devicePixelRatio);
+
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(
+        45,
+        width / height,
+        1,
+        10000
+    );
+
+    camera.position.set(0, 0, 1000);
+
+    // generate geometry
+    // const geometry = new THREE.BoxGeometry(500, 500, 500);
+    const geometry = new THREE.BufferGeometry();
+
+    const vertices = new Float32Array( [
+        -1.0, -1.0,  1.0, // v0
+        1.0, -1.0,  1.0, // v1
+        1.0,  1.0,  1.0, // v2
+        -1.0,  1.0,  1.0, // v3
+    ] );
+
+    const indices = [
+        0, 1, 2,
+        2, 3, 0,
+    ];
+
+    geometry.setIndex( indices );
+    geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+
+    const material = new THREE.MeshStandardMaterial({
+        color: 0xff0000
+    });
+
+    const box = new THREE.Mesh(geometry, material);
+    scene.add(box);
+
+    // control light
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.intensity = 2;
+    light.position.set(1, 1, 1);
+    scene.add(light);
+
+    // render box
+    renderer.render(scene, camera);
 
 }

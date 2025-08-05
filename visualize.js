@@ -172,10 +172,10 @@ function executeVisualization() {
     const geometry = new THREE.BufferGeometry();
 
     const vertices = new Float32Array( [
-        -1.0, -1.0,  1.0, // v0
-        1.0, -1.0,  1.0, // v1
-        1.0,  1.0,  1.0, // v2
-        -1.0,  1.0,  1.0, // v3
+        0, 0,  0, // v0
+        500, 0,  0, // v1
+        500,  0,  500, // v2
+        0,  0,  500, // v3
     ] );
 
     const indices = [
@@ -183,23 +183,34 @@ function executeVisualization() {
         2, 3, 0,
     ];
 
+
     geometry.setIndex( indices );
     geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
 
-    const material = new THREE.MeshStandardMaterial({
-        color: 0xff0000
-    });
+    const material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+    // const material = new THREE.MeshStandardMaterial({color: 0x0000FF});
 
     const box = new THREE.Mesh(geometry, material);
     scene.add(box);
 
     // control light
-    const light = new THREE.DirectionalLight(0xffffff, 1);
+    const light = new THREE.DirectionalLight(0xFFFFFF);
     light.intensity = 2;
     light.position.set(1, 1, 1);
     scene.add(light);
 
-    // render box
-    renderer.render(scene, camera);
+    // // render box
+    // renderer.render(scene, camera);
+
+    tick();
+    
+    function tick() {
+        requestAnimationFrame(tick);
+
+        box.rotation.x += 0.01;
+        box.rotation.y += 0.01;
+
+        renderer.render(scene, camera);
+    }
 
 }

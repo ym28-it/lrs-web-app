@@ -127,8 +127,11 @@ function parseHtoVIncidence(H, V, incidence) {
     
     // 1: lines in incidence is pairs of inequalities
     // 2: necessary  inequalities list  elems is 
+    let facetsList = [];
     for (let i; i < incidence.length; i++) {
         const line = incidence[i];
+        const summits = V[i+1];
+
 
     }
 }
@@ -138,6 +141,27 @@ function parseVtoHIncidence(H, V, incidence) {
     // H: inequalities
     // V: summits
 
+}
+
+// いらないかも
+function getIndices(facetsList) {
+    let indices = [];
+    for (const surface of facetsList) {
+        let square = [];
+        while (surface) {
+            square.push(surface.shift())
+            if (square.length === 3) {
+                indices.push(square);
+                let newSquare = [];
+                newSquare.push(square.shift());
+                newSquare.push(square.pop());
+                square = newSquare;
+            }
+        }
+        indices.push(square);
+    }
+
+    return indices;
 }
 
 

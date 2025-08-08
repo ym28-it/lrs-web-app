@@ -10,6 +10,7 @@ export function getVHData(output) {
     let incidence;
     let HtoV = false;
     let VtoH = false;
+    let graph = {};
 
     if (input.includes("H-representation")) {
         HtoV = true;
@@ -18,8 +19,12 @@ export function getVHData(output) {
         H = parsedInput.result;
         V = parsedOutput.result;
         incidence = parsedOutput.incidence;
+        console.log('H:\n', H)
+        console.log('V:\n', V)
+        console.log('incidence:\n', incidence);
 
-        // const facetsData = parseHtoVIncidence(H, V, incidence);
+        const edges = parseHtoVIncidence(V.slice(1), incidence);
+        graph = parseIncidence(edges);
 
     } else if (input.includes("V-representation")) {
         VtoH = true;
@@ -29,7 +34,7 @@ export function getVHData(output) {
         H = parsedOutput.result;
         incidence = parsedOutput.incidence;
 
-        // const facetsData = parseVtoHIncidence(H, V, incidence);
+        graph = parseIncidence(incidence);
 
     } else {
         console.error("Invalid input/output format in visualize.js");
@@ -73,7 +78,7 @@ function parseData(data, HtoV, VtoH) {
                 console.log("this polytope is over 3 dimensional");
                 return false;
             } else {
-                dimension = line[1];
+                dimension = parseInt(line[1]);
                 result.push(line);
                 continue;
             }
@@ -82,11 +87,13 @@ function parseData(data, HtoV, VtoH) {
         if (line.length > dimension) {
             console.log('incidence');
             if (HtoV) {
-                const facets = line.indexOf("facets");
-                line = line.slice(facets+1, facets + dimension);
+                const start = line.indexOf("facets") + 1;
+                const end = start + dimension -1;
+                line = line.slice(start, end);
             } else if (VtoH) {
-                const verticesRays = line.indexOf("vertices/rays");
-                line = line.slice(verticesRays+1, verticesRays + dimension + 1);
+                const start = line.indexOf("vertices/rays") + 1;
+                const end = start + dimension;
+                line = line.slice(start, end);
             } else {
                 console.error("Invalid data format");
                 return false;
@@ -121,47 +128,44 @@ function listToString(list) {
 }
 
 
-function parseHtoVIncidence(H, V, incidence) {
+function parseHtoVIncidence(V, incidence) {
     // H: inequalities
-    // V: summits
+    // V: vertices
     
-    // 1: lines in incidence is pairs of inequalities
-    // 2: necessary  inequalities list  elems is 
-    let facetsList = [];
-    for (let i; i < incidence.length; i++) {
-        const line = incidence[i];
-        const summits = V[i+1];
-
-
-    }
-}
-
-
-function parseVtoHIncidence(H, V, incidence) {
-    // H: inequalities
-    // V: summits
-
-}
-
-// いらないかも
-function getIndices(facetsList) {
-    let indices = [];
-    for (const surface of facetsList) {
-        let square = [];
-        while (surface) {
-            square.push(surface.shift())
-            if (square.length === 3) {
-                indices.push(square);
-                let newSquare = [];
-                newSquare.push(square.shift());
-                newSquare.push(square.pop());
-                square = newSquare;
-            }
+    console.log('V in parseHtoVIncidence:\n', V);
+    console.log('incidence in parseHtoVIncidence:\n', incidence);
+    let edges = Array.from({length: V.length}, () => []);
+    for (let i = 0; i < incidence.length; i++) {
+        for (let edge of incidence[i]) {
+            const index = parseInt(edge) -1;
+            edges[index].push(i+1);
         }
-        indices.push(square);
     }
 
-    return indices;
+    console.log('edges\n', edges);
+    return edges;
+}
+
+
+function parseIncidence(incidence) {
+    // H: inequalities
+    // V: vertices
+
+    let graph = Array.from({length: incidence.length}, () => []);
+    for (let i = 0; i < incidence.length; i++) {
+        const vertices = incidence[i]
+            .filter(item => !/^\d+\*$/.test(item))
+            .map(item => parseInt(item)-1);
+        
+        console.log('vertices in parseIncidence\n', vertices);
+        for (let vertex of vertices) {
+            const others = vertices.filter((item) => item !== vertex);
+            graph[vertex] = graph[vertex].concat(others);
+        }
+    }
+
+    console.log('graph:\n', graph);
+    return graph;
 }
 
 

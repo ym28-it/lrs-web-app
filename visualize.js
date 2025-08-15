@@ -1,38 +1,45 @@
 import * as THREE from 'three';
+import { buildHalfEdges } from './buildHalfEdges.js';
+import { buildRadialOrders } from './buildRadialOrders.js';
+import { buildAllFacesAndTriangles } from './buildAllFacesAndTriangles.js';
 
 export function getVHData(output) {
     const inputArea = document.getElementById('inputArea');
     const input = inputArea.value;
     // console.log('inputs:\n', input);
 
-    let H;
-    let V;
+    let HRep;
+    let VRep;
     let incidence;
-    let HtoV = false;
-    let VtoH = false;
-    let graph = {};
+    let graph = [];
+    let position = [];
 
     if (input.includes("H-representation")) {
-        HtoV = true;
-        let parsedInput = parseData(input, HtoV, VtoH);
-        let parsedOutput = parseData(output, HtoV, VtoH);
-        H = parsedInput.result;
-        V = parsedOutput.result;
+        let parsedInput = parseData(input, false, true);
+        let parsedOutput = parseData(output, true, false);
+        HRep = parsedInput.result;
+        VRep = parsedOutput.result;
         incidence = parsedOutput.incidence;
-        console.log('H:\n', H)
-        console.log('V:\n', V)
+        position = parsedOutput.position;
+        console.log('H:\n', HRep);
+        console.log('V:\n', VRep);
         console.log('incidence:\n', incidence);
+        console.log('position:\n', position);
 
-        const edges = parseHtoVIncidence(V.slice(1), incidence);
+        const edges = parseHtoVIncidence(VRep.slice(1), incidence);
         graph = parseIncidence(edges);
 
     } else if (input.includes("V-representation")) {
-        VtoH = true;
-        let parsedInput = parseData(input, HtoV, VtoH);
-        let parsedOutput = parseData(output, HtoV, VtoH);
-        V = parsedInput.result;
-        H = parsedOutput.result;
+        let parsedInput = parseData(input, true, false);
+        let parsedOutput = parseData(output, false, true);
+        VRep = parsedInput.result;
+        HRep = parsedOutput.result;
         incidence = parsedOutput.incidence;
+        position = parsedInput.position;
+        console.log('H:\n', HRep);
+        console.log('V:\n', VRep);
+        console.log('incidence:\n', incidence);
+        console.log('position:\n', position);
 
         graph = parseIncidence(incidence);
 
@@ -41,14 +48,33 @@ export function getVHData(output) {
         return false;
     }
 
-    executeVisualization();
+    // buildHalfEdge
+    const halfEdge = buildHalfEdges(graph);
+    const edgeFns = {
+        isUsed: halfEdge.isUsed,
+        setUsed: halfEdge.setUsed,
+    }
+
+    const p_in = getPointInPolytope(VRep.slice(1));
+
+    // buildRadialOrders
+    const radialOrders = buildRadialOrders(position, graph, p_in);
+    const rot = {orders: radialOrders.orders, idxMap: radialOrders.idxMap}
+
+    // buildAllFacesAndTriangles
+    const { faces, triangles } = buildAllFacesAndTriangles(position, p_in, graph, rot, edgeFns);
+    console.log('faces:\n', faces);
+    console.log('triangles:\n', triangles);
+
+
+    executeVisualization(position, faces);
 
     // console.log('H:\n', H);
     // console.log('V:\n', V);
     // console.log('incidence:\n', incidence);
 
-    const resultH = listToString(H);
-    const resultV = listToString(V);
+    const resultH = listToString(HRep);
+    const resultV = listToString(VRep);
 
     // console.log('resultH:\n', resultH);
     // console.log('resultV:\n', resultV);
@@ -57,7 +83,7 @@ export function getVHData(output) {
 
 }
 
-function parseData(data, HtoV, VtoH) {
+function parseData(data, V, H) {
     const begin = data.lastIndexOf("begin") + 6;
     const end = data.lastIndexOf("end") - 1;
     
@@ -65,6 +91,7 @@ function parseData(data, HtoV, VtoH) {
     let incidence = [];
     let result = [];
     let dimension = 1;
+    let position = [];
 
     // console.log('input in parseData', input);
 
@@ -86,11 +113,11 @@ function parseData(data, HtoV, VtoH) {
 
         if (line.length > dimension) {
             console.log('incidence');
-            if (HtoV) {
+            if (V) {
                 const start = line.indexOf("facets") + 1;
                 const end = start + dimension -1;
                 line = line.slice(start, end);
-            } else if (VtoH) {
+            } else if (H) {
                 const start = line.indexOf("vertices/rays") + 1;
                 const end = start + dimension;
                 line = line.slice(start, end);
@@ -102,12 +129,15 @@ function parseData(data, HtoV, VtoH) {
         } else {
             console.log('result');
             result.push(line);
+            if (V) {
+                position.push(line.slice(1));
+            }
         }
     }
 
     // console.log('result', result);
     // console.log('incidence', incidence);
-    return {result, incidence};
+    return {result, incidence, position};
 }
 
 
@@ -169,12 +199,69 @@ function parseIncidence(incidence) {
 }
 
 
-function whetherWebGLSupported() {
+function generateIndices(V, graph) {
+    if (!V) {
+        console.error("Vertices not provided for sorting.");
+        return;
+    }
+    if (!graph) {
+        console.error("Graph not provided for sorting.");
+        return;
+    }
+    const vertices = V.slice(1);
+    const p_in = getPointInPolytope(vertices);
+    const {isUsed, setUsed} = generateUsedEdgeFuncs(graph);
 
 }
 
 
-function executeVisualization() {
+function getPointInPolytope(vertices) {
+    let sumArray = Array.from({length: vertices[0].length - 1}, () => 0);
+    for (let vertex of vertices) {
+        if (vertex[0] === 1) {
+            for (let i=1; i < V.length; i++) {
+                sumArray[i-1] += vertex[i];
+            }
+        }
+    }
+
+    sumArray = sumArray.map((x) => x / vertices.length);
+
+    return sumArray;
+}
+
+
+
+function getFaceCenter(vertices) {
+    let sumArray = Array.from({length: vertices[0].length}, () => 0);
+    for (let vertex of vertices) {
+        for (let i=0; i < V.length; i++) {
+            sumArray[i] += vertex[i];
+        }
+    }
+
+    sumArray = sumArray.map((x) => x / vertices.length);
+
+    return sumArray;
+}
+
+
+function getVector(base, target) {
+    if (base.length !== target.length) {
+        console.log('base and target length are not same');
+        return;
+    }
+
+    const vector = [];
+    for (let i = 0; i < base.length; i++) {
+        vector[i] = target[i] - base[i];
+    }
+
+    return vector;
+}
+
+
+function executeVisualization(position, indices) {
     const renderer = new THREE.WebGLRenderer({
         canvas: document.querySelector("#myCanvas")
     });
@@ -199,18 +286,24 @@ function executeVisualization() {
     // const geometry = new THREE.BoxGeometry(500, 500, 500);
     const geometry = new THREE.BufferGeometry();
 
-    const vertices = new Float32Array( [
-        0, 0,  0, // v0
-        500, 0,  0, // v1
-        500,  0,  500, // v2
-        0,  0,  500, // v3
-    ] );
+    // const vertices = new Float32Array( [
+    //     0, 0,  0, // v0
+    //     500, 0,  0, // v1
+    //     500,  0,  500, // v2
+    //     0,  0,  500, // v3
+    // ] );
 
-    const indices = [
-        0, 1, 2,
-        2, 0, 3,
-    ];
+    // const indices = [
+    //     0, 1, 2,
+    //     2, 0, 3,
+    // ];
 
+    const vertices = new Float32Array(position.length * 3);
+    for (let i = 0; i < position.length; i++) {
+        vertices[i * 3] = position[i][0];
+        vertices[i * 3 + 1] = position[i][1];
+        vertices[i * 3 + 2] = position[i][2];
+    }
 
     geometry.setIndex( indices );
     geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );

@@ -9,26 +9,21 @@ export function buildHalfEdges(graph) {
     const V = new Uint32Array(M);
     const used = new Uint8Array(M);
 
-    const edgeToId = new Map();
+    const edgeToId = Array.from({ length: N }, () => new Map());
 
     let eid = 0;
     for (let u = 0; u < N; u++) {
         const neighbors = graph[u];
         for (let i = 0; i < neighbors.length; i++) {
             const v = neighbors[i];
-
-            const key = (BigInt(u) << 32n) | BigInt(v);
-            if (!edgeToId.has(key)) {
-                edgeToId.set(key, eid);
-                U[eid] = u;
-                V[eid] = v;
-                eid++;
-            }
+            edgeToId[u].set(V, eid);
+            U[eid] = u;
+            V[eid] = v;
+            eid++;
         }
     }
-    const size = eid;
 
-    const getId = (u, v) => edgeToId.get((BigInt(u) << 32n) | BigInt(v));
+    const getId = (u, v) => edgeToId[u].get(v);
     const isUsed = (u, v) => {
         const id = getId(u, v);
         return id !== undefined && used[id] === 1;

@@ -10,9 +10,9 @@ import { triangulateFan } from './triangulateFan.js';
  *   外向きCCW化 → 回転正規化 → 三角形化
  * までを実行。重複面は faceSeen で抑止。
  */
-export function processFacePipeline(u, v, positions, p_in, graph, rot, edgeFns, faceSeen) {
+export function processFacePipeline(u, v, positions, p_in, rot, edgeFns, faceSeen) {
     // ① 面輪郭を1周
-    const raw = extractFace(u, v, positions, graph, rot, edgeFns, { eps:1e-7 });
+    const raw = extractFace(u, v, rot, edgeFns, { eps:1e-7 });
 
     if (!raw) {
         console.log(`extractFace(${u}, ${v}) failed`);
@@ -41,5 +41,5 @@ export function processFacePipeline(u, v, positions, p_in, graph, rot, edgeFns, 
     // ⑤ 扇分割（対角線はグローバルには登録しない：面ローカル）
     const triangles = triangulateFan(canon);
 
-    return { face: canon, triangles };
+    return { face: canon, triangles: triangles };
 }

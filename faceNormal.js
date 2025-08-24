@@ -1,3 +1,6 @@
+import { vecNorm } from "./vectorFuncs.js";
+
+
 // =============== 1) Newell 法線 & 面重心 ======================
 /**
  * Newell法でポリゴン法線を計算（向きは頂点列に依存）
@@ -14,7 +17,7 @@ export function newellNormal(positions, face) {
         nz += (p[0] - q[0]) * (p[1] + q[1]);
     }
     const n = [nx, ny, nz];
-    const L = vNorm(n);
+    const L = vecNorm(n);
     return L > 0 ? [nx/L, ny/L, nz/L] : [0,0,0];
 }
 

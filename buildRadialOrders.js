@@ -12,11 +12,16 @@ export function buildRadialOrders(position, graph, p_in) {
 
         const arr = [];
         for (const w of graph[v]) {
+            // d: normalized v->w vector |d| = 1
             const d = normalize(vecSub(position[w], position[v]));
+            // dp: dp is orthogonal to o
             let dp = projectPlane(d, o);
+            dp = normalize(dp);
             const L = vecNorm(dp);
-            const theta = L < 1e-12 ? +Infinity : Math.atan2((e2, dp)/L, vecDot(e1, dp)/L);
-            arr.push({w, theta});
+            const cos = vecDot(e1, dp);
+            const sin = vecDot(e2, dp);
+            const theta = L < 1e-12 ? +Infinity : Math.atan2(sin, cos);
+            arr.push({ w, theta });
         }
         arr.sort((a, b) => a.theta - b.theta);
         orders[v] = arr.map(o=>o.w);

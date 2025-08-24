@@ -1,3 +1,264 @@
+
+
+/**
+ * Build position array from V-representation (homogeneous coordinates).
+ * Keeps only rows whose first entry is 1, drops the first entry, pads to 3D if needed.
+ * @param {number[][]} VRep
+ * @param {{padTo3?: boolean}=} opts
+ * @returns {number[][]}
+ */
+function buildPositionFromV(VRep, { padTo3 = true } = {}) {
+    if (!Array.isArray(VRep)) return [];
+    const out = [];
+    for (const row of VRep) {
+        if (!Array.isArray(row) || row.length < 2) continue;
+        if (row[0] !== 1) continue;
+        let spatial = row.slice(1);
+        if (spatial.length === 2 && padTo3) {
+            spatial = [spatial[0], spatial[1], 0];
+        }
+        out.push(spatial);
+    }
+    return out;
+}
+
+function spatialNormal(coeffs) {
+    return Array.isArray(coeffs) ? coeffs.slice(1) : [];
+}
+
+
+function rankOf(A, tol = 1e-10) {
+    const m = A.length;
+    if (m === 0) return 0;
+    const n = A[0].length;
+    const M = A.map(r => r.slice());
+    let r = 0, lead = 0;
+    for (let i = 0; i < m && lead < n; i++) {
+        // pivot
+        let piv = i;
+        for (let j = i; j < m; j++) {
+            if (Math.abs(M[j][lead]) > Math.abs(M[piv][lead])) piv = j;
+        }
+        if (Math.abs(M[piv][lead]) <= tol) {
+            lead++;
+            i--;
+            continue;
+        }
+        // swap
+        [M[i], M[piv]] = [M[piv], M[i]];
+        // normalize
+        const div = M[i][lead];
+        for (let k = lead; k < n; k++) M[i][k] /= div;
+        // eliminate
+        for (let j = 0; j < m; j++) {
+            if (j === i) continue;
+            const factor = M[j][lead];
+            if (Math.abs(factor) > tol) {
+                for (let k = lead; k < n; k++) {
+                    M[j][k] -= factor * M[i][k];
+                }
+            }
+        }
+        r++;
+        lead++;
+    }
+    return r;
+}
+
+
+function addUndirectedEdge(graph, u, v) {
+    if (u === v) return;
+    const gu = graph[u], gv = graph[v];
+    if (!gu.includes(v)) gu.push(v);
+    if (!gv.includes(u)) gv.push(u);
+}
+
+
+/**
+ * Build graph (adjacency list) from incidence + H + V + dimension.
+ * - incidence が raw 行（{kind:'facet'|'vertex', ...}）なら kind で自動分岐
+ * - incidence が number[][]（facet→vertex 配列）なら V 由来として扱う
+ * @param {any[]|number[][]} incidence
+ * @param {number[][]} H
+ * @param {number[][]} V
+ * @param {number} d
+ * @returns {number[][]}
+ */
+function buildGraph(incidence, H, V, d) {
+    const nVertices = Array.isArray(V) ? V.length : 0;
+    const graph = Array.from({ length: nVertices }, () => []);
+    if (!Array.isArray(incidence) || incidence.length === 0) return graph;
+
+    const first = incidence[0];
+
+    // 1) raw 行（parseDataDetailed の IncidenceRow）が来た場合
+    if (first && typeof first === 'object' && ('kind' in first)) {
+        const hasFacet = incidence.some(r => r && r.kind === 'facet');
+        const hasVertex = incidence.some(r => r && r.kind === 'vertex');
+        if (hasFacet) {
+            return buildGraphFromVIncidence(incidence.filter(r => r.kind === 'facet'), H, V, d);
+        } else if (hasVertex) {
+            return buildGraphFromHIncidence(incidence.filter(r => r.kind === 'vertex'), H, V, d);
+        }
+        return graph;
+    }
+
+    // 2) すでに facet→頂点の number[][] な簡易形式（V 由来）として与えられた場合
+    if (Array.isArray(first)) {
+        const rows = incidence.map((arr, idx) => ({
+            kind: 'facet', id: idx, cobasis: arr, basis: [], starred: new Set()
+        }));
+        return buildGraphFromVIncidence(rows, H, V, d);
+    }
+
+    return graph;
+}
+
+
+/**
+ * H 由来 incidence（頂点行）→ 無向グラフ
+ * rows: [{kind:'vertex', id, cobasis:[], basis:[], ...}, ...]
+ */
+function buildGraphFromHIncidence(rows, H, V, d) {
+    const nVertices = Array.isArray(V) ? V.length : 0;
+    const graph = Array.from({ length: nVertices }, () => []);
+
+    // 1) 頂点ごとの tight 不等式集合 T[i]
+    /** @type {Map<number, Set<number>>} */
+    const tightSets = new Map();
+    for (const r of rows) {
+        const i = r.id;
+        if (i < 0 || i >= nVertices) continue; // V と index を揃える
+        const set = tightSets.get(i) ?? new Set();
+        for (const j of (r.cobasis || [])) set.add(j);
+        for (const j of (r.basis || [])) set.add(j);
+        // 星印は parse 前に除外されている前提（混じっていたら外す）
+        if (r.starred && r.starred.size) {
+            for (const s of r.starred) set.delete(s);
+        }
+        tightSets.set(i, set);
+    }
+
+    // 2) 逆引き：不等式 j → その上にある頂点リスト
+    const mIneq = Array.isArray(H) ? H.length : 0;
+    const verticesOfIneq = Array.from({ length: mIneq }, () => []);
+    for (const [vtx, set] of tightSets.entries()) {
+        for (const j of set) {
+            if (j >= 0 && j < mIneq) verticesOfIneq[j].push(vtx);
+        }
+    }
+
+    // 3) 候補ペアの共起カウント（共通本数 >= d−1 を候補に）
+    /** @type {Map<string, number>} */
+    const pairCount = new Map();
+    function bump(u, v) {
+        const a = Math.min(u, v), b = Math.max(u, v);
+        const key = a + "," + b;
+        pairCount.set(key, (pairCount.get(key) ?? 0) + 1);
+    }
+    for (const vs of verticesOfIneq) {
+        for (let a = 0; a < vs.length; a++) {
+            for (let b = a + 1; b < vs.length; b++) bump(vs[a], vs[b]);
+        }
+    }
+
+    // 4) ランク判定で確定
+    for (const [key, co] of pairCount.entries()) {
+        if (co < d - 1) continue; // まずは粗い足切り
+        const [u, v] = key.split(',').map(Number);
+        const Tu = tightSets.get(u) || new Set();
+        const Tv = tightSets.get(v) || new Set();
+        const common = [];
+        for (const j of Tu) if (Tv.has(j)) common.push(j);
+        if (common.length < d - 1) continue;
+
+        const normals = [];
+        for (const j of common) {
+            const row = H[j];
+            if (Array.isArray(row)) normals.push(spatialNormal(row));
+        }
+        if (normals.length < d - 1) continue;
+
+        const r = rankOf(normals);
+        if (r === d - 1) addUndirectedEdge(graph, u, v);
+    }
+
+    return graph;
+}
+
+/**
+ * V 由来 incidence（ファセット行）→ 無向グラフ
+ * rows: [{kind:'facet', id, cobasis:[], basis:[], starred:Set, ...}, ...]
+ */
+function buildGraphFromVIncidence(rows, H, V, d) {
+    const nVertices = Array.isArray(V) ? V.length : 0;
+    const graph = Array.from({ length: nVertices }, () => []);
+
+    // V の行のうち「先頭が 1（= 頂点）」のみ有効（ray を除外）
+    function isFiniteVertex(idx) {
+        return idx >= 0 && idx < nVertices && Array.isArray(V[idx]) && V[idx][0] === 1;
+    }
+
+    // 1) 頂点→所属ファセット集合 F[i]
+    /** @type {Map<number, Set<number>>} */
+    const vertexToFacets = new Map();
+    for (const r of rows) {
+        const f = r.id;
+        const starred = r.starred || new Set();
+        const vs = new Set([...(r.cobasis || []), ...(r.basis || [])]);
+        for (const s of starred) vs.delete(s); // 星付きはこの面には“不在”
+        for (const v of vs) {
+            if (!isFiniteVertex(v)) continue; // ray や欠損を除外
+            const set = vertexToFacets.get(v) ?? new Set();
+            set.add(f);
+            vertexToFacets.set(v, set);
+        }
+    }
+
+    // 2) 共起で候補ペア抽出（各ファセットで全頂点ペアに +1）
+    /** @type {Map<string, number>} */
+    const pairCount = new Map();
+    function bump(u, v) {
+        const a = Math.min(u, v), b = Math.max(u, v);
+        const key = a + "," + b;
+        pairCount.set(key, (pairCount.get(key) ?? 0) + 1);
+    }
+    for (const r of rows) {
+        const starred = r.starred || new Set();
+        const vsArr = [...new Set([...(r.cobasis || []), ...(r.basis || [])])]
+            .filter(v => !starred.has(v))
+            .filter(isFiniteVertex);
+        for (let i = 0; i < vsArr.length; i++) {
+            for (let j = i + 1; j < vsArr.length; j++) bump(vsArr[i], vsArr[j]);
+        }
+    }
+
+    // 3) ランク判定で確定
+    for (const [key, co] of pairCount.entries()) {
+        if (co < d - 1) continue;
+        const [u, v] = key.split(',').map(Number);
+        const Fu = vertexToFacets.get(u) || new Set();
+        const Fv = vertexToFacets.get(v) || new Set();
+
+        const commonFacets = [];
+        for (const f of Fu) if (Fv.has(f)) commonFacets.push(f);
+        if (commonFacets.length < d - 1) continue;
+
+        const normals = [];
+        for (const f of commonFacets) {
+            const row = H[f];
+            if (Array.isArray(row)) normals.push(spatialNormal(row));
+        }
+        if (normals.length < d - 1) continue;
+
+        const r = rankOf(normals);
+        if (r === d - 1) addUndirectedEdge(graph, u, v);
+    }
+
+    return graph;
+}
+
+
 import * as THREE from 'three';
 import { buildHalfEdges } from './buildHalfEdges.js';
 import { buildRadialOrders } from './buildRadialOrders.js';
@@ -13,53 +274,53 @@ export function getVHData(output) {
     let incidence;
     let graph = [];
     let position = [];
+    let dimension;
 
     if (input.includes("H-representation")) {
-        let parsedInput = parseData(input, false, true);
-        let parsedOutput = parseData(output, true, false);
+        let parsedInput = parseDataCompat(input, false, true);
+        let parsedOutput = parseDataCompat(output, true, false);
         HRep = parsedInput.result;
         VRep = parsedOutput.result;
-        incidence = parsedOutput.incidence;
+        incidence = parsedOutput.incidenceRows;
         position = parsedOutput.position;
+        dimension = parsedInput.dimension;
         console.log('H:\n', HRep);
         console.log('V:\n', VRep);
         console.log('incidence:\n', incidence);
         console.log('position:\n', position);
-
-        const edges = parseHtoVIncidence(VRep.slice(1), incidence);
-        graph = parseIncidence(edges);
+        console.log('dimension:\n', dimension);
 
     } else if (input.includes("V-representation")) {
-        let parsedInput = parseData(input, true, false);
-        let parsedOutput = parseData(output, false, true);
+        let parsedInput = parseDataCompat(input, true, false);
+        let parsedOutput = parseDataCompat(output, false, true);
         VRep = parsedInput.result;
         HRep = parsedOutput.result;
-        incidence = parsedOutput.incidence;
+        incidence = parsedOutput.incidenceRows;
         position = parsedInput.position;
+        dimension = parsedInput.dimension;
         console.log('H:\n', HRep);
         console.log('V:\n', VRep);
         console.log('incidence:\n', incidence);
         console.log('position:\n', position);
-
-        graph = parseIncidence(incidence);
+        console.log('dimension:\n', dimension);
 
     } else {
         console.error("Invalid input/output format in visualize.js");
         return false;
     }
 
-    // buildHalfEdge
-    const halfEdge = buildHalfEdges(graph);
-    const edgeFns = {
-        isUsed: halfEdge.isUsed,
-        setUsed: halfEdge.setUsed,
-    }
+    graph = buildGraph(incidence, HRep, VRep, dimension);
 
-    const p_in = getPointInPolytope(VRep.slice(1));
+    // position is already padded to 3D by parseDataCompat/buildPositionFromParseDataDetailed
+
+    // buildHalfEdge
+    const edgeFns = buildHalfEdges(graph);
+
+    const p_in = getPointInPolytope(position);
+    console.log('p_in:\n', p_in);
 
     // buildRadialOrders
-    const radialOrders = buildRadialOrders(position, graph, p_in);
-    const rot = {orders: radialOrders.orders, idxMap: radialOrders.idxMap}
+    const rot = buildRadialOrders(position, graph, p_in);
 
     // buildAllFacesAndTriangles
     const { faces, triangles } = buildAllFacesAndTriangles(position, p_in, graph, rot, edgeFns);
@@ -67,7 +328,7 @@ export function getVHData(output) {
     console.log('triangles:\n', triangles);
 
 
-    executeVisualization(position, faces);
+    executeVisualization(position, triangles);
 
     // console.log('H:\n', H);
     // console.log('V:\n', V);
@@ -83,62 +344,212 @@ export function getVHData(output) {
 
 }
 
-function parseData(data, V, H) {
-    const begin = data.lastIndexOf("begin") + 6;
-    const end = data.lastIndexOf("end") - 1;
-    
-    let input = data.substring(begin, end).split("\n");
-    let incidence = [];
-    let result = [];
-    let dimension = 1;
-    let position = [];
 
-    // console.log('input in parseData', input);
+/** -------------------------
+ *  Detailed incidence parser (example implementation)
+ *  - Keeps basis/cobasis separated
+ *  - Normalizes indices to 0-based
+ *  - Pairs incidence rows with the following numeric row via (kind,id)
+ *  - Safe for both H-input (vertices/rays incidence) and V-input (facets incidence)
+ *  NOTE: This is an example implementation and is NOT wired into getVHData().
+ *        You can try it by calling parseDataDetailed(data, {isV:..., isH:...}).
+ * ------------------------- */
 
-    for (let i = 0; i < input.length; i++) {
-        // line = input[i];
-        let line = input[i].split(" ").filter((word) => word.length > 0);
-        // console.log('line in parseData:\n', line);
+/** @typedef {{ kind:'vertex'|'ray'|'facet', id:number, cobasis:number[], basis:number[], starred:Set<number>, I:number|null, rawLine:string }} IncidenceRow */
+/** @typedef {{ kind:'vertex'|'facet', id:number, values:number[], rawLine:string }} ValueRow */
 
-        if (i===0) {
-            if (line[1] > 4) {
-                console.log("this polytope is over 3 dimensional");
-                return false;
+/** Extract lines inside begin...end (trimmed, empty lines removed) */
+function _extractBeginEndLines(data) {
+    const begin = data.lastIndexOf("begin");
+    const end = data.lastIndexOf("end");
+    if (begin === -1 || end === -1 || end <= begin) return [];
+    const body = data.slice(begin + "begin".length, end).split("\n");
+    return body.map(s => s.trim()).filter(s => s.length > 0);
+}
+
+/** Header: ***** &lt;homDim&gt; rational  -> returns spatial dimension d = homDim - 1 */
+function _parseHeaderDimension(line) {
+  // e.g., "***** 3 rational"
+    const m = line.match(/^\*+\s+(\d+)\s+rational/i);
+    if (!m) return null;
+    const homDim = parseInt(m[1], 10);
+    if (!Number.isFinite(homDim)) return null;
+    return homDim - 1;
+}
+
+/** Returns {kind, id} if the line is an incidence header, else null */
+function _matchIncidenceKindId(line) {
+  // V#n / R#m / F#k at start
+    const m = line.match(/^(V|R|F)#\s*(\d+)/);
+    if (!m) return null;
+    const tag = m[1];
+    const id1 = parseInt(m[2], 10);
+    if (!Number.isFinite(id1)) return null;
+    const id = id1 - 1; // normalize to 0-based
+    const kind = tag === 'V' ? 'vertex' : (tag === 'R' ? 'ray' : 'facet');
+    return { kind, id };
+}
+
+/** Extract the middle "incidence payload" ... tokens between 'facets' or 'vertices/rays' and 'I#' */
+function _extractIncidencePayload(line) {
+    // Find anchor 'facets' or 'vertices/rays'
+    const anchor = line.includes("facets") ? "facets" : (line.includes("vertices/rays") ? "vertices/rays" : null);
+    if (!anchor) return { payload: "", I: null };
+
+    // Slice from anchor to I# or end
+    const after = line.slice(line.indexOf(anchor) + anchor.length).trim();
+    const iPos = after.search(/\bI#\s*\d+/);
+    const core = iPos >= 0 ? after.slice(0, iPos).trim() : after;
+
+    // I# value
+    let I = null;
+    const Im = line.match(/\bI#\s*(\d+)/);
+    if (Im) I = parseInt(Im[1], 10);
+
+    return { payload: core, I };
+}
+
+/** Parse left:right sides, collecting starred tokens into Set and excluding from arrays */
+function _parseBasisCobasis(payload) {
+    const parts = payload.split(":");
+    const left = (parts[0] || "").trim();
+    const right = (parts[1] || "").trim();
+
+    function parseSide(s) {
+        if (!s) return { arr: [], starred: [] };
+        const tokens = s.split(/\s+/).filter(Boolean);
+        const arr = [];
+        const starred = [];
+        for (const t of tokens) {
+            const m = t.match(/^(\d+)(\*)?$/);
+            if (!m) continue;
+            const idx0 = parseInt(m[1], 10) - 1; // normalize to 0-based
+            if (m[2] === "*") {
+                starred.push(idx0);
             } else {
-                dimension = parseInt(line[1]);
-                result.push(line);
+                arr.push(idx0);
+            }
+        }
+        return { arr, starred };
+    }
+
+    const leftP = parseSide(left);
+    const rightP = parseSide(right);
+
+    // If there was no ":", the single side is conceptually cobasis in lrs docs.
+    if (parts.length === 1) {
+        return {
+        cobasis: leftP.arr,
+        basis: [],
+        starred: new Set(leftP.starred)
+        };
+    }
+
+    return {
+        cobasis: leftP.arr,
+        basis: rightP.arr,
+        starred: new Set([...leftP.starred, ...rightP.starred])
+    };
+}
+
+/** Numeric-only row (usual value row right after an incidence line) */
+function _isNumericRow(line) {
+    // allow spaces and numbers, optional signs & decimals, but reject words
+    return /^[\s\+\-0-9.eE]+$/.test(line);
+}
+
+/** Parse a numeric row into number[] */
+    function _parseNumericRow(line) {
+    return line.trim().split(/\s+/).filter(Boolean).map(Number);
+}
+
+/**
+ * Example parser that returns:
+ *   {
+ *     dimension: d,
+ *     incidence: IncidenceRow[],
+ *     values: ValueRow[],
+ *     H: number[][], // homogeneous, only filled when kind === 'facet'
+ *     V: number[][]  // homogeneous, only filled when kind === 'vertex'
+ *   }
+ * This does not modify existing getVHData flow; it's provided as a ready-to-use example.
+ */
+function parseDataDetailed(data, { isV = false, isH = false } = {}) {
+    const lines = _extractBeginEndLines(data);
+    if (lines.length === 0) return { dimension: null, incidence: [], values: [], H: [], V: [] };
+
+    // First non-empty should be header; if not, attempt best-effort
+    let dim = _parseHeaderDimension(lines[0]);
+    let i = (dim !== null) ? 1 : 0;
+
+    // Fallback: if header missing, try to infer from first numeric value row later
+    const incidence = /** @type {IncidenceRow[]} */([]);
+    const values = /** @type {ValueRow[]} */([]);
+    const H = [];
+    const V = [];
+
+    let pending = null; // last parsed incidence {kind,id} awaiting numeric row
+
+    for (; i < lines.length; i++) {
+        const line = lines[i];
+
+        // Try to match an incidence header row
+        const head = _matchIncidenceKindId(line);
+        if (head) {
+            const { payload, I } = _extractIncidencePayload(line);
+            const { cobasis, basis, starred } = _parseBasisCobasis(payload);
+            const row = {
+                kind: head.kind,
+                id: head.id,
+                cobasis,
+                basis,
+                starred,
+                I: (I ?? null),
+                rawLine: line
+            };
+            incidence.push(row);
+            pending = { kind: head.kind, id: head.id };
+            continue;
+        }
+
+    // If numeric, pair with the last incidence (if any)
+        if (_isNumericRow(line)) {
+            const nums = _parseNumericRow(line);
+            if (dim === null && nums.length > 0) {
+                // infer spatial dim from homogeneous length
+                dim = nums.length - 1;
+            }
+            if (pending) {
+                const val = { kind: pending.kind === 'ray' ? 'vertex' : pending.kind, id: pending.id, values: nums, rawLine: line };
+                values.push(val);
+                // Also populate H/V buckets
+                if (pending.kind === 'facet') {
+                    H[pending.id] = nums;
+                } else if (pending.kind === 'vertex') {
+                    V[pending.id] = nums;
+                } else if (pending.kind === 'ray') {
+                // rays are not vertices but we store their numeric row if needed later
+                // (do nothing special here)
+                }
+                pending = null;
                 continue;
             }
         }
 
-        if (line.length > dimension) {
-            console.log('incidence');
-            if (V) {
-                const start = line.indexOf("facets") + 1;
-                const end = start + dimension -1;
-                line = line.slice(start, end);
-            } else if (H) {
-                const start = line.indexOf("vertices/rays") + 1;
-                const end = start + dimension;
-                line = line.slice(start, end);
-            } else {
-                console.error("Invalid data format");
-                return false;
-            }
-            incidence.push(line);
-        } else {
-            console.log('result');
-            result.push(line);
-            if (V) {
-                position.push(line.slice(1));
-            }
-        }
+        // Other lines (e.g., comments like det=, z= already consumed in header rows) -> ignore
     }
 
-    // console.log('result', result);
-    // console.log('incidence', incidence);
-    return {result, incidence, position};
+    return { dimension: dim, incidence, values, H, V };
 }
+
+/** Small demo of how to use parseDataDetailed (not executed):
+ *
+ *   const parsed = parseDataDetailed(outputText, { isV: true, isH: false });
+ *   // parsed.incidence -> array of {cobasis, basis, starred, kind, id, I}
+ *   // parsed.values    -> pair rows with same (kind,id)
+ *   // parsed.V / parsed.H -> homogeneous rows by id
+ *   // parsed.dimension -> spatial dimension
+ */
 
 
 function listToString(list) {
@@ -158,106 +569,17 @@ function listToString(list) {
 }
 
 
-function parseHtoVIncidence(V, incidence) {
-    // H: inequalities
-    // V: vertices
-    
-    console.log('V in parseHtoVIncidence:\n', V);
-    console.log('incidence in parseHtoVIncidence:\n', incidence);
-    let edges = Array.from({length: V.length}, () => []);
-    for (let i = 0; i < incidence.length; i++) {
-        for (let edge of incidence[i]) {
-            const index = parseInt(edge) -1;
-            edges[index].push(i+1);
+function getPointInPolytope(position) {
+
+    let p_in = Array.from({ length: position[0].length }, () => 0);
+    for ( let vertex of position) {
+        for (let i = 0; i < vertex.length; i++) {
+            p_in[i] += vertex[i];
         }
     }
 
-    console.log('edges\n', edges);
-    return edges;
-}
-
-
-function parseIncidence(incidence) {
-    // H: inequalities
-    // V: vertices
-
-    let graph = Array.from({length: incidence.length}, () => []);
-    for (let i = 0; i < incidence.length; i++) {
-        const vertices = incidence[i]
-            .filter(item => !/^\d+\*$/.test(item))
-            .map(item => parseInt(item)-1);
-        
-        console.log('vertices in parseIncidence\n', vertices);
-        for (let vertex of vertices) {
-            const others = vertices.filter((item) => item !== vertex);
-            graph[vertex] = graph[vertex].concat(others);
-        }
-    }
-
-    console.log('graph:\n', graph);
-    return graph;
-}
-
-
-function generateIndices(V, graph) {
-    if (!V) {
-        console.error("Vertices not provided for sorting.");
-        return;
-    }
-    if (!graph) {
-        console.error("Graph not provided for sorting.");
-        return;
-    }
-    const vertices = V.slice(1);
-    const p_in = getPointInPolytope(vertices);
-    const {isUsed, setUsed} = generateUsedEdgeFuncs(graph);
-
-}
-
-
-function getPointInPolytope(vertices) {
-    let sumArray = Array.from({length: vertices[0].length - 1}, () => 0);
-    for (let vertex of vertices) {
-        if (vertex[0] === 1) {
-            for (let i=1; i < V.length; i++) {
-                sumArray[i-1] += vertex[i];
-            }
-        }
-    }
-
-    sumArray = sumArray.map((x) => x / vertices.length);
-
-    return sumArray;
-}
-
-
-
-function getFaceCenter(vertices) {
-    let sumArray = Array.from({length: vertices[0].length}, () => 0);
-    for (let vertex of vertices) {
-        for (let i=0; i < V.length; i++) {
-            sumArray[i] += vertex[i];
-        }
-    }
-
-    sumArray = sumArray.map((x) => x / vertices.length);
-
-    return sumArray;
-}
-
-
-function getVector(base, target) {
-    if (base.length !== target.length) {
-        console.log('base and target length are not same');
-        return;
-    }
-
-    const vector = [];
-    for (let i = 0; i < base.length; i++) {
-        vector[i] = target[i] - base[i];
-    }
-
-    return vector;
+    p_in = p_in.map(x => x / position.length);
+    return p_in;
 }
 
 
@@ -298,12 +620,15 @@ function executeVisualization(position, indices) {
     //     2, 0, 3,
     // ];
 
+    console.log('position:\n', position);
+    
     const vertices = new Float32Array(position.length * 3);
     for (let i = 0; i < position.length; i++) {
         vertices[i * 3] = position[i][0];
         vertices[i * 3 + 1] = position[i][1];
         vertices[i * 3 + 2] = position[i][2];
     }
+    console.log('vertices:\n', vertices);
 
     geometry.setIndex( indices );
     geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
@@ -334,4 +659,31 @@ function executeVisualization(position, indices) {
         renderer.render(scene, camera);
     }
 
+}
+
+// --- Final override: compat wrapper that mirrors original parseData shape ---
+function parseDataCompat(data, V, H) {
+    const parsed = parseDataDetailed(data, { isV: V, isH: H });
+    if (!parsed) return { result: [], incidence: [], position: [], dimension: 0, incidenceRows: [] };
+
+    const result = (Array.isArray(parsed.V) && parsed.V.length) ? parsed.V : parsed.H || [];
+    const position = buildPositionFromV(result, { padTo3: true });
+    const dimension = parsed.dimension ?? (position[0] ? position[0].length : 0);
+
+    // ここは従来どおり「facet → 頂点配列」に簡約（V由来の時に効く）
+    const incidence = Array.isArray(parsed.incidence)
+        ? parsed.incidence
+            .filter(row => row && row.kind === 'facet')
+            .map(row => {
+                const set = new Set([...(row.cobasis || []), ...(row.basis || [])]);
+                if (row.starred && row.starred.size) {
+                    for (const s of row.starred) set.delete(s);
+                }
+                return Array.from(set).sort((a, b) => a - b);
+            })
+        : [];
+
+    const incidenceRows = parsed.incidence || []; // ★ 生の行（kind='vertex' も保持）
+
+    return { result, incidence, position, dimension, incidenceRows };
 }

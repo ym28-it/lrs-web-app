@@ -16,7 +16,7 @@ export function buildHalfEdges(graph) {
         const neighbors = graph[u];
         for (let i = 0; i < neighbors.length; i++) {
             const v = neighbors[i];
-            edgeToId[u].set(V, eid);
+            edgeToId[u].set(v, eid);
             U[eid] = u;
             V[eid] = v;
             eid++;
@@ -44,6 +44,6 @@ export function buildHalfEdges(graph) {
     console.log('U in buildHalfEdges:\n', U);
     console.log('V in buildHalfEdges:\n', V);
 
-    return { U, V, used, size, getId, isUsed, setUsed, markCycleUsed }
+    return { U, V, used, getId, isUsed, setUsed, markCycleUsed }
 
 }

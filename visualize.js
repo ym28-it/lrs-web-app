@@ -12,7 +12,10 @@ function buildPositionFromV(VRep, { padTo3 = true } = {}) {
     const out = [];
     for (const row of VRep) {
         if (!Array.isArray(row) || row.length < 2) continue;
-        if (row[0] !== 1) continue;
+        // if (row[0] !== 1) continue;
+        // インデックス0が0の場合、半直線がその頂点から出ていると判断
+        // スキップせずにそのまま頂点として記録して、別データで半直線ように識別できるようにしておく
+        // 半直線は辺の描画時に判断
         let spatial = row.slice(1);
         if (spatial.length === 2 && padTo3) {
             spatial = [spatial[0], spatial[1], 0];
@@ -260,6 +263,7 @@ function buildGraphFromVIncidence(rows, H, V, d) {
 
 
 import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { buildHalfEdges } from './buildHalfEdges.js';
 import { buildRadialOrders } from './buildRadialOrders.js';
 import { buildAllFacesAndTriangles } from './buildAllFacesAndTriangles.js';
@@ -277,13 +281,23 @@ export function getVHData(output) {
     let dimension;
 
     if (input.includes("H-representation")) {
-        let parsedInput = parseDataCompat(input, false, true);
+        // let parsedInput = parseDataCompat(input, false, true);
+        let parsedInput = _extractBeginEndLines(input);
         let parsedOutput = parseDataCompat(output, true, false);
-        HRep = parsedInput.result;
+        HRep = [];
+        for (const line of parsedInput) {
+            if (_isNumericRow(line)) {
+                const nums = _parseNumericRow(line);
+                if (nums.length > 0) {
+                    HRep.push(nums);
+                }
+            }
+        }
         VRep = parsedOutput.result;
         incidence = parsedOutput.incidenceRows;
-        position = parsedOutput.position;
-        dimension = parsedInput.dimension;
+        
+        dimension = parsedOutput.dimension;
+        position = buildPositionFromV(VRep, { padTo3: dimension === 2 ? true : false });
         console.log('H:\n', HRep);
         console.log('V:\n', VRep);
         console.log('incidence:\n', incidence);
@@ -291,13 +305,23 @@ export function getVHData(output) {
         console.log('dimension:\n', dimension);
 
     } else if (input.includes("V-representation")) {
-        let parsedInput = parseDataCompat(input, true, false);
+        // let parsedInput = parseDataCompat(input, true, false);
+        let parsedInput = _extractBeginEndLines(input);
         let parsedOutput = parseDataCompat(output, false, true);
-        VRep = parsedInput.result;
+        VRep = [];
+        for (const line of parsedInput) {
+            if (_isNumericRow(line)) {
+                const nums = _parseNumericRow(line);
+                if (nums.length > 0) {
+                    VRep.push(nums);
+                }
+            }
+        }
+
         HRep = parsedOutput.result;
         incidence = parsedOutput.incidenceRows;
-        position = parsedInput.position;
-        dimension = parsedInput.dimension;
+        dimension = parsedOutput.dimension;
+        position = buildPositionFromV(VRep, { padTo3: dimension === 2 ? true : false });
         console.log('H:\n', HRep);
         console.log('V:\n', VRep);
         console.log('incidence:\n', incidence);
@@ -326,9 +350,9 @@ export function getVHData(output) {
     const { faces, triangles } = buildAllFacesAndTriangles(position, p_in, graph, rot, edgeFns);
     console.log('faces:\n', faces);
     console.log('triangles:\n', triangles);
+    console.log('graph:\n', graph);
 
-
-    executeVisualization(position, triangles);
+    executeVisualization(position, triangles, p_in, edgeFns.edges);
 
     // console.log('H:\n', H);
     // console.log('V:\n', V);
@@ -583,7 +607,7 @@ function getPointInPolytope(position) {
 }
 
 
-function executeVisualization(position, indices) {
+function executeVisualization(position, indices, p_in, edges) {
     const renderer = new THREE.WebGLRenderer({
         canvas: document.querySelector("#myCanvas")
     });
@@ -598,8 +622,8 @@ function executeVisualization(position, indices) {
     const camera = new THREE.PerspectiveCamera(
         45,
         width / height,
-        1,
-        10000
+        0.01,
+        100000
     );
 
     camera.position.set(0, 0, 1000);
@@ -633,11 +657,44 @@ function executeVisualization(position, indices) {
     geometry.setIndex( indices );
     geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
 
+    geometry.computeBoundingSphere();
+    const bs = geometry.boundingSphere;
+    const radius = bs ? bs.radius : 1;
+    const center = bs ? bs.center : new THREE.Vector3(0, 0, 0);
+
+
+    const vFOV = THREE.MathUtils.degToRad(camera.fov);
+    const fitMargin = 1.3;
+    let dist = (radius * fitMargin) / Math.sin(vFOV / 2);
+    if (!Number.isFinite(dist) || dist <= 0) dist = 1000;
+    // camera.position.set(0, 0, dist);
+    // camera.lookAt(0, 0, 0);
+
+    camera.position.copy(center).add(new THREE.Vector3(0, 0, dist));
+    camera.lookAt(center);
+    camera.updateProjectionMatrix();
+
     const material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
     // const material = new THREE.MeshStandardMaterial({color: 0x0000FF});
 
     const box = new THREE.Mesh(geometry, material);
+
+    // if (Array.isArray(p_in) && p_in.length >= 3) {
+    //     box.position.set(-p_in[0], -p_in[1], -p_in[2]);
+    // }
+
+    const edgeGeometry = new THREE.BufferGeometry();
+    edgeGeometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+    edgeGeometry.setIndex(new THREE.BufferAttribute( new Uint16Array(edges), 1 ));
+    const lines = new THREE.LineSegments( edgeGeometry, new THREE.LineBasicMaterial({ color: 0xffffff }));
+
+
+    const axesHelper = new THREE.AxesHelper( 500 );
+
+
     scene.add(box);
+    scene.add(lines);
+    scene.add(axesHelper);
 
     // control light
     const light = new THREE.DirectionalLight(0xFFFFFF);
@@ -645,26 +702,28 @@ function executeVisualization(position, indices) {
     light.position.set(1, 1, 1);
     scene.add(light);
 
-    // // render box
-    // renderer.render(scene, camera);
-
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    // controls.target.set(0, 0, 0);
+    controls.dampingFactor = 0.08;
+    controls.target.copy(center);
+    controls.update();
     tick();
     
     function tick() {
         requestAnimationFrame(tick);
 
-        box.rotation.x += 0.01;
-        box.rotation.y += 0.01;
+        controls.update();
 
         renderer.render(scene, camera);
     }
-
 }
 
 // --- Final override: compat wrapper that mirrors original parseData shape ---
 function parseDataCompat(data, V, H) {
     const parsed = parseDataDetailed(data, { isV: V, isH: H });
     if (!parsed) return { result: [], incidence: [], position: [], dimension: 0, incidenceRows: [] };
+    console.log('parsed:\n', parsed);
 
     const result = (Array.isArray(parsed.V) && parsed.V.length) ? parsed.V : parsed.H || [];
     const position = buildPositionFromV(result, { padTo3: true });

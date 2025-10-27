@@ -8,8 +8,9 @@ function navigateMode(button) {
     window.location.href = targetUrl;
 }
 
-function goExperiment(button) {
-    const targetUrl = './experiment/experiment.html';
+// 削除可能
+// function goExperiment(button) {
+//     const targetUrl = './experiment/experiment.html';
 
-    window.location.href = targetUrl;
-}
+//     window.location.href = targetUrl;
+// }

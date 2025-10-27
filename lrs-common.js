@@ -1,6 +1,6 @@
 // lrs-common.js
 import { renderFileSelector } from "./filelist-ui.js";
-import { getVHData } from "./visualize.js";
+import { getVHData } from "./visualize/visualize.js";
 import { addIncidenceInInput, parseCorrectOutput } from "./incidenceControl.js";
 
 
@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const selectElem = document.getElementById('selected-file-name');
     
 
+    // select file on server
     const fileList = await fetch('./fileList.json').then(res => res.json());
 
     const openFileDialogButton = document.getElementById('server-file');
@@ -39,8 +40,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // mode-config.jsonの適用
     const urlParams = new URLSearchParams(window.location.search);
-    const mode = urlParams.get('mode') || 'default';
-    const version = urlParams.get('version') || 'v7.3';
+    // const mode = urlParams.get('mode') || 'default';
+    const version = 'v7.3';
 
     const configFilePath = "./mode-config.json";
 
@@ -54,16 +55,52 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    const modeConfig = config.modes[mode];
-    console.log('modeConfig:', modeConfig);
+    console.log('config:', config);
+    console.log('config.modes:', config.modes);
+    console.log('config.modes["default"]:', config.modes['hybrid-gmp']);
 
-    document.title = modeConfig.title;
 
-    const headerH3 = document.querySelector('header h3');
-    if (headerH3) {
-        headerH3.textContent = modeConfig.headerH3;
-        headerH3.textContent += ` based on ${version}`;
+    // const modeConfig = config.modes[mode];
+    const modeSelector = document.getElementById('mode-selector');
+    for (const mode in config.modes) {
+        const modeConfig = config.modes[mode];
+        // console.log('modeConfig:', modeConfig);
+        const option = document.createElement('option');
+        option.value = mode;
+        option.textContent = modeConfig.title;
+        modeSelector.appendChild(option);
     }
+
+    // console.log('modeConfig:', modeConfig);
+
+    // const headerH3 = document.querySelector('header h3');
+    // if (headerH3) {
+    //     headerH3.textContent = modeConfig.headerH3;
+    //     headerH3.textContent += ` based on ${version}`;
+    // }
+
+    // generate mode option elements func
+    function changeModeConfig(defaultMode) {
+        let modeConfig = config.modes[defaultMode];
+        const getModeConfig = () => modeConfig;
+        const setModeConfig = newModeConfig => {
+            modeConfig = config.modes[newModeConfig];
+            console.log('set modeConfig:', modeConfig);
+            console.log('type of modeConfig:', typeof modeConfig);
+        }
+        return [getModeConfig, setModeConfig];
+    }
+    const [getModeConfig, setModeConfig] = changeModeConfig('hybrid-gmp');
+    document.title = getModeConfig().title;
+
+    modeSelector.addEventListener('change', event => {
+        const selectedMode = event.target.value;
+        console.log('type of selectedMode:', typeof selectedMode);
+        console.log('selectedMode:', selectedMode);
+        setModeConfig(selectedMode);
+        document.title = getModeConfig().title;
+    });
+
 
     // safe-unsafeボタンは一旦放置（必要な場合実装、いらないかも）
     let currentWorker = null;
@@ -80,13 +117,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             const file = event.target.files[0];
             const reader = new FileReader();
             reader.onload = (e) => {
-            inputArea.value = e.target.result;
+                inputArea.value = e.target.result;
             };
             if (file) {
-            reader.readAsText(file);
-            const baseName = file.name;  // 拡張子除去
-            outputFileNameInput.placeholder = `${baseName}.out`;
-            selectElem.textContent = 'Not Selected';
+                reader.readAsText(file);
+                const baseName = file.name;  // 拡張子除去
+                outputFileNameInput.placeholder = `${baseName}.out`;
+                selectElem.textContent = 'Not Selected';
             }
         });
     }
@@ -137,6 +174,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
         const visualization = document.getElementById('visualization');
+        const canvas = document.getElementById('myCanvas');
+        if (visualization.checked) {
+            canvas.style.display = 'block';
+        } else {
+            canvas.style.display = 'none';
+        }
         let hasAddedIncidence = false;
         if (visualization.checked) {
             console.log("visualization");
@@ -152,9 +195,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             inputText = inputArea.value;
         }
 
+        const modeConfig = getModeConfig();
         const moduleParam = encodeURIComponent(modeConfig.wasmModule);
 
         const workerUrl = `./lrs-worker.js?module=${moduleParam}&version=${version}`;
+        console.log('workerUrl', workerUrl);
 
         try {
             // Workerの作成 (worker.js が実際の処理を担当)
@@ -162,6 +207,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log('create Worker', workerUrl);
         } catch (err) {
             console.log('create Worker error:', err);
+            hideLoading();
+            return;
         }
 
         // Workerからのメッセージ受信時の処理
@@ -172,11 +219,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 currentWorker.postMessage({ input: inputText });
 
             } else if (e.data.error) {
-                outputArea.value = "エラー: " + e.data.error;
+                outputArea.value = "Error: " + e.data.error;
                 hideLoading();
                 currentWorker.terminate();
-                console.error("Workerエラー: ", e.data.error);
+                console.error("WorkerError: ", e.data.error);
                 clearInterval(timeInProcess); // タイマーをクリア
+                return;
 
             } else if (e.data.elapsedTime) {
                 console.log(`elapsedTime: ${e.data.elapsedTime / 1000} s`);
@@ -189,28 +237,35 @@ document.addEventListener('DOMContentLoaded', async () => {
             } else if (e.data.result) {
                 let output = e.data.result;
                 
+                // let H, V, incidence;
                 // visualization
-                let {resultH: H, resultV: V, incidence} = getVHData(output);
-                console.log('H:\n', H);
+                if (visualization.checked) {
+                    let {resultH: H, resultV: V, incidence} = getVHData(output);
+                    console.log('H:\n', H);
 
-                console.log('V:\n', V);
+                    console.log('V:\n', V);
 
-                console.log('incidence:\n', incidence);
+                    console.log('incidence:\n', incidence);
+
+                    if (hasAddedIncidence) {
+                        outputArea.value = parseCorrectOutput(output, V, H);
+                    } else {
+                        outputArea.value = output;
+                    }
+                } else {
+                    outputArea.value = output;
+                }
 
                 // output
                 console.log('get output data');
 
-                if (hasAddedIncidence) {
-                    outputArea.value = parseCorrectOutput(output, V, H);
-                } else {
-                    outputArea.value = output;
-                }
                 
                 outputArea.value += `\n*** Based on lrs ${version} ***\n`;
                 hideLoading(); // 結果受信後にローディング非表示
                 console.log('hide Loading');
 
                 currentWorker.terminate(); // Workerの終了（リソース解放）
+                return;
 
             }
         };
@@ -221,6 +276,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             outputArea.value = "Workerエラー: " + err.message;
             hideLoading();
             currentWorker.terminate();
+            return;
         };
     }
 

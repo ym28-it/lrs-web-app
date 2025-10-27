@@ -7,7 +7,7 @@ export function buildRadialOrders(position, graph, p_in) {
 
     for (let v = 0; v < N; v++) {
         const o = normalize(vecSub(position[v], p_in));
-        const e1 = anyPerp(o);
+        const e1 = anyPerp(o);      // x axis
         const e2 = vecCross(o, e1);
 
         const arr = [];

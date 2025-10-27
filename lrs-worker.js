@@ -1,5 +1,5 @@
 // lrs-worker.js
-// Wasmモジュール（lrs64.js）をimportScriptsで読み込む
+// WasmモジュールをimportScriptsで読み込む
 
 const urlParams = new URLSearchParams(self.location.search);
 const wasmModule = urlParams.get('module') || 'lrs64.js';
@@ -39,7 +39,7 @@ Module.onRuntimeInitialized = function() {
             let results = heavyWasmProcessing(input);
             const end = performance.now();
             // 結果をメインスレッドに返送
-            self.postMessage({elapsedTime: end-start});
+            self.postMessage({ elapsedTime: end-start });
             self.postMessage({ result: results });
         } catch (err) {
             console.log("Error in onRuntimeInitialized:\n", err);

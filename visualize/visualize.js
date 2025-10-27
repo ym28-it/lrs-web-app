@@ -264,6 +264,7 @@ function buildGraphFromVIncidence(rows, H, V, d) {
 
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 import { buildHalfEdges } from './buildHalfEdges.js';
 import { buildRadialOrders } from './buildRadialOrders.js';
 import { buildAllFacesAndTriangles } from './buildAllFacesAndTriangles.js';
@@ -579,10 +580,11 @@ function parseDataDetailed(data, { isV = false, isH = false } = {}) {
 function listToString(list) {
     let str = '';
     for (let i = 0; i < list.length; i++) {
-        if (i === 0) {
-            str += list[i].join(" ") + '\n';
-            continue;
-        } else if (i === list.length-1) {
+        // if (i === 0) {
+        //     str += list[i].join(" ") + '\n';
+        //     continue;
+        // } else 
+        if (i === list.length-1) {
             str += ' ' + list[i].join("  ");
             continue;
         }
@@ -616,6 +618,16 @@ function executeVisualization(position, indices, p_in, edges) {
     const height = 540;
     renderer.setSize(width, height);
     renderer.setPixelRatio(window.devicePixelRatio);
+
+    // --- CSS2D renderer for tooltips (labels) ---
+    const labelRenderer = new CSS2DRenderer();
+    labelRenderer.setSize(width, height);
+    labelRenderer.domElement.style.position = 'absolute';
+    labelRenderer.domElement.style.top = '0';
+    labelRenderer.domElement.style.left = '0';
+    labelRenderer.domElement.style.pointerEvents = 'none';
+    // Overlay the CSS2D canvas on top of WebGL canvas
+    (renderer.domElement.parentElement || document.body).appendChild(labelRenderer.domElement);
 
     const scene = new THREE.Scene();
 
@@ -657,10 +669,12 @@ function executeVisualization(position, indices, p_in, edges) {
     geometry.setIndex( indices );
     geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
 
+    // --- Common bounds for camera fit and picking thresholds ---
     geometry.computeBoundingSphere();
     const bs = geometry.boundingSphere;
     const radius = bs ? bs.radius : 1;
     const center = bs ? bs.center : new THREE.Vector3(0, 0, 0);
+
 
 
     const vFOV = THREE.MathUtils.degToRad(camera.fov);
@@ -683,24 +697,207 @@ function executeVisualization(position, indices, p_in, edges) {
     //     box.position.set(-p_in[0], -p_in[1], -p_in[2]);
     // }
 
+    // lineSegments
     const edgeGeometry = new THREE.BufferGeometry();
     edgeGeometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
     edgeGeometry.setIndex(new THREE.BufferAttribute( new Uint16Array(edges), 1 ));
-    const lines = new THREE.LineSegments( edgeGeometry, new THREE.LineBasicMaterial({ color: 0xffffff }));
+    const lines = new THREE.LineSegments( edgeGeometry, new THREE.LineBasicMaterial({ color: 0x000000 }));
+    // --- Points for vertex visualization & picking (non-indexed Points) ---
+    const pointsGeometry = new THREE.BufferGeometry();
+    pointsGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    const pointsMaterial = new THREE.PointsMaterial({ size: Math.max(radius * 0.015, 1.0), sizeAttenuation: true, color: 0x2266ff });
+    const points = new THREE.Points(pointsGeometry, pointsMaterial);
+    scene.add(points);
+
+    // --- Invisible, non-indexed LineSegments for robust edge picking ---
+    // Build a position array that lists each segment's two endpoints explicitly (non-indexed)
+    const segCount = Math.floor(edges.length / 2);
+    const ePickPos = new Float32Array(segCount * 2 * 3);
+    for (let k = 0; k < segCount; k++) {
+      const i1 = edges[2 * k];
+      const i2 = edges[2 * k + 1];
+      ePickPos.set(vertices.subarray(i1 * 3, i1 * 3 + 3), (k * 2) * 3);
+      ePickPos.set(vertices.subarray(i2 * 3, i2 * 3 + 3), (k * 2 + 1) * 3);
+    }
+    const eIds = new Uint32Array(segCount * 2);
+    for (let k = 0; k < segCount; k++) {
+      eIds[k * 2] = k;
+      eIds[k * 2 + 1] = k;
+    }
+    const pickEdgeGeometry = new THREE.BufferGeometry();
+    pickEdgeGeometry.setAttribute('position', new THREE.BufferAttribute(ePickPos, 3));
+    pickEdgeGeometry.setAttribute('edgeIdInt', new THREE.Uint32BufferAttribute(eIds, 1));
+    const pickEdges = new THREE.LineSegments(pickEdgeGeometry, new THREE.LineBasicMaterial({ color: 0x000000 }));
+    pickEdges.visible = false; // helper for picking only
+    scene.add(pickEdges);
+
+    // --- Highlight object for a single hovered edge (thin line in a distinct color) ---
+    const edgeHLGeom = new THREE.BufferGeometry();
+    edgeHLGeom.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(6), 3));
+    const edgeHL = new THREE.LineSegments(edgeHLGeom, new THREE.LineBasicMaterial({ color: 0xff5533 }));
+    edgeHL.visible = false;
+    scene.add(edgeHL);
+
+    // // axis gizmo
+    // renderer.autoClear = false;
+    const axisHelper = new THREE.AxesHelper( 500 );
+    // const axisScene = new THREE.Scene();
+    // const axisCamera = new THREE.PerspectiveCamera(50, 1, 0.1, 10);
+    // axisCamera.position.set(0, 0, 3);
+    // const axisHelperMini = new THREE.AxesHelper(1.2);
+    // axisScene.add(axisHelperMini);
+
+    // function renderAxisGizmo() {
+    //     axisCamera.quaternion.copy(camera.quaternion);
+
+    //     const size = Math.floor(Math.min(renderer.domElement.width, renderer.domElement.height) * 0.18);
+    //     const m = 10; // merging
+    //     const rect = renderer.domElement.getBoundingClientRect();
+    //     const w = rect.width, h = rect.height;
+
+    //     renderer.clearDepth();
+    //     renderer.setScissor(true);
+    //     renderer.setViewport(m, h - size - m, size, size);
+    //     renderer.setScissor(m, h - size - m, size, size);
+    //     renderer.render(axisScene, axisCamera);
+
+    //     renderer.setScissorTest(false);
+    // }
 
 
-    const axesHelper = new THREE.AxesHelper( 500 );
+    // local Axes
+    // geometry.computeBoundingSphere();
+    const localAxesCenter = geometry.boundingSphere?.center || new THREE.Vector3();
+    const localAxesRadius = geometry.boundingSphere?.radius || 1;
+
+    const AX_LOCAL = Math.max(5, localAxesRadius * 0.5);
+    const axesLocal = new THREE.AxesHelper(AX_LOCAL);
+    axesLocal.position.copy(localAxesCenter);
+    axesLocal.renderOrder = 999;
+    axesLocal.traverse(o => {
+        if (o.material && 'depthTest' in o.material) o.material.depthTest = false;
+    });
+    scene.add(axesLocal);
+
 
 
     scene.add(box);
     scene.add(lines);
-    scene.add(axesHelper);
+    scene.add(axisHelper);
 
     // control light
-    const light = new THREE.DirectionalLight(0xFFFFFF);
+    const light = new THREE.DirectionalLight(0xffffff);
     light.intensity = 2;
     light.position.set(1, 1, 1);
     scene.add(light);
+
+    // --- Raycaster & tooltip label setup ---
+    const raycaster = new THREE.Raycaster();
+    const pickThreshold = Math.max(radius * 0.02, 2.0); // world-space threshold
+    raycaster.params.Points.threshold = pickThreshold;
+    raycaster.params.Line.threshold = pickThreshold;
+
+    const mouseNDC = new THREE.Vector2();
+    let needsPick = false;
+
+    // CSS2D tooltip (single DOM reused)
+    const tipEl = document.createElement('div');
+    tipEl.style.padding = '4px 8px';
+    tipEl.style.borderRadius = '6px';
+    tipEl.style.background = 'rgba(0,0,0,0.75)';
+    tipEl.style.color = '#fff';
+    tipEl.style.font = '12px/1.2 system-ui, sans-serif';
+    tipEl.style.whiteSpace = 'pre';
+    tipEl.style.pointerEvents = 'none';
+    const tipObj = new CSS2DObject(tipEl);
+    tipObj.visible = false;
+    scene.add(tipObj);
+
+    // Convert mouse to NDC using the renderer's canvas rect
+    function updateMouseFromEvent(e) {
+        const rect = renderer.domElement.getBoundingClientRect();
+        const x = ( (e.clientX - rect.left) / rect.width ) * 2 - 1;
+        const y = -( (e.clientY - rect.top) / rect.height ) * 2 + 1;
+        mouseNDC.set(x, y);
+    }
+
+    renderer.domElement.addEventListener('mousemove', (e) => {
+        updateMouseFromEvent(e);
+        needsPick = true;
+    });
+
+    // Highlight helpers
+    const defaultPointSize = pointsMaterial.size;
+    function clearHighlight() {
+        // restore point size
+        pointsMaterial.size = defaultPointSize;
+        pointsMaterial.needsUpdate = true;
+        // hide edge highlight
+        edgeHL.visible = false;
+        tipObj.visible = false;
+    }
+
+    // Pick priority: vertex > edge
+    function pickOnce() {
+        raycaster.setFromCamera(mouseNDC, camera);
+        const hits = raycaster.intersectObjects([points, pickEdges], false);
+        if (!hits.length) {
+            clearHighlight();
+            return;
+        }
+        // Prefer Points first
+        let best = null;
+        for (const h of hits) {
+            if (h.object === points) { best = h; break; }
+            if (!best && h.object === pickEdges) { best = h; }
+        }
+        if (!best) {
+            clearHighlight();
+            return;
+        }
+
+        if (best.object === points) {
+            const i = best.index; // vertex index
+            // enlarge point temporarily
+            pointsMaterial.size = defaultPointSize * 1.6;
+            pointsMaterial.needsUpdate = true;
+
+            // exact vertex position
+            const pa = points.geometry.getAttribute('position');
+            const vx = pa.getX(i), vy = pa.getY(i), vz = pa.getZ(i);
+
+            tipObj.position.set(vx, vy, vz);
+            tipObj.element.textContent = `Vertex #${i}\n(${vx.toFixed(3)}, ${vy.toFixed(3)}, ${vz.toFixed(3)})`;
+            tipObj.visible = true;
+
+            edgeHL.visible = false;
+            return;
+        }
+
+        if (best.object === pickEdges) {
+            const segIndex = Math.floor(best.index / 2);
+            // build highlight segment from original vertex buffer using the edge index pair
+            const i1 = edges[2 * segIndex];
+            const i2 = edges[2 * segIndex + 1];
+            const pa = geometry.getAttribute('position');
+            const p1x = pa.getX(i1), p1y = pa.getY(i1), p1z = pa.getZ(i1);
+            const p2x = pa.getX(i2), p2y = pa.getY(i2), p2z = pa.getZ(i2);
+
+            const hlPos = edgeHL.geometry.getAttribute('position');
+            hlPos.setXYZ(0, p1x, p1y, p1z);
+            hlPos.setXYZ(1, p2x, p2y, p2z);
+            hlPos.needsUpdate = true;
+            edgeHL.visible = true;
+
+            tipObj.position.copy(best.point);
+            tipObj.element.textContent = `Edge #${segIndex}\n(v${i1} – v${i2})`;
+            tipObj.visible = true;
+
+            // restore point size if previously enlarged
+            pointsMaterial.size = defaultPointSize;
+            pointsMaterial.needsUpdate = true;
+        }
+    }
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
@@ -714,9 +911,19 @@ function executeVisualization(position, indices, p_in, edges) {
         requestAnimationFrame(tick);
 
         controls.update();
-
+        if (needsPick) {
+            pickOnce();
+            needsPick = false;
+        }
         renderer.render(scene, camera);
+        labelRenderer.render(scene, camera);
+        // renderAxisGizmo();
     }
+    // Keep CSS2D size in sync with WebGL canvas size when the window resizes
+    window.addEventListener('resize', () => {
+        const rect = renderer.domElement.getBoundingClientRect();
+        labelRenderer.setSize(rect.width, rect.height);
+    });
 }
 
 // --- Final override: compat wrapper that mirrors original parseData shape ---

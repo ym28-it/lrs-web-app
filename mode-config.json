@@ -1,14 +1,7 @@
 {
     "modes": {
-        "default": {
-            "title": "LRS Hybrid GMP",
-            "headerH3": "LRS Hybrid GMP",
-            "moduleDir": "hybrid-gmp",
-            "wasmModule": "hybrid-gmp.js"
-
-        },
         "hybrid-gmp": {
-            "title": "LRS Hybrid GMP",
+            "title": "LRS Hybrid GMP (default)",
             "headerH3": "LRS Hybrid GMP",
             "moduleDir": "hybrid-gmp",
             "wasmModule": "hybrid-gmp.js"

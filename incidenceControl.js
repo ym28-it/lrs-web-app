@@ -3,7 +3,9 @@
 export function addIncidenceInInput() {
     const inputArea = document.getElementById('inputArea');
 
-    if (!inputArea.value.includes("incidence")) {
+    if (inputArea.value.includes("printcobasis")) {
+        return false;
+    } else if (!inputArea.value.includes("incidence")) {
         console.log('add incidence');
         // inputArea.value += '\nincidence\n';
         return true;

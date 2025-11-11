@@ -276,7 +276,7 @@ You can also do it by pressing Ctrl+Enter (Cmd+Enter).
    ```makefile
    CC = emcc
    GMP=-DGMP -I./gmp-6.2.1 -L./gmp-6.2.1/.libs -lgmp
-   CFLAGS = -O3 -Wall -s ALLOW_MEMORY_GROWTH=1 -s ENVIRONMENT="web" -s SAFE_HEAP=1 -s STACK_SIZE=8388608 \
+   CFLAGS = -O3 -Wall -s ALLOW_MEMORY_GROWTH=1 -s ENVIRONMENT="web"　-s STACK_SIZE=8388608 \
          -s EXPORTED_RUNTIME_METHODS="['FS', 'callMain']" -I./lrsarith-011
    lrs: ${LRSOBJ} ${LRSOBJ2}
 	      $(CC) ${CFLAGS} ${PLRSFLAGS} -DMA ${BITS} -L${LIBDIR} -o lrs.js ${LRSOBJ} ${LRSOBJ2} ${MINI} ${GMP}

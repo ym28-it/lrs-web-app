@@ -114,6 +114,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 currentWorker.terminate();
                 currentWorker = null;
             }
+            hideLoading();
             const file = event.target.files[0];
             const reader = new FileReader();
             reader.onload = (e) => {
